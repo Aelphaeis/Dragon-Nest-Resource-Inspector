@@ -27,7 +27,6 @@ namespace DragonNest.ResourceInspection.dnt.Test
                     DNTViewer viewer = new DNTViewer();
                     viewer.LoadDNT(fs); 
                     viewer.Show(dockPanel1, DockState.Document);
-
                 }
         }
 

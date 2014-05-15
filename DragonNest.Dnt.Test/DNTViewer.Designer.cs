@@ -30,18 +30,14 @@
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Columns");
-            this.thisIsATestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.hideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.freezeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.unfrozenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.treeView1ColumnMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.naviBar1 = new Guifreaks.NavigationBar.NaviBar(this.components);
             this.naviBand1 = new Guifreaks.NavigationBar.NaviBand(this.components);
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.treeView1ColumnMenu.SuspendLayout();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.freezeToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -51,51 +47,8 @@
             this.naviBand1.ClientArea.SuspendLayout();
             this.naviBand1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // thisIsATestToolStripMenuItem
-            // 
-            this.thisIsATestToolStripMenuItem.Name = "thisIsATestToolStripMenuItem";
-            this.thisIsATestToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
-            this.thisIsATestToolStripMenuItem.Text = "Show";
-            this.thisIsATestToolStripMenuItem.Click += new System.EventHandler(this.thisIsATestToolStripMenuItem_Click);
-            // 
-            // hideToolStripMenuItem
-            // 
-            this.hideToolStripMenuItem.Name = "hideToolStripMenuItem";
-            this.hideToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
-            this.hideToolStripMenuItem.Text = "Hide";
-            this.hideToolStripMenuItem.Click += new System.EventHandler(this.hideToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(117, 6);
-            // 
-            // freezeToolStripMenuItem
-            // 
-            this.freezeToolStripMenuItem.Name = "freezeToolStripMenuItem";
-            this.freezeToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
-            this.freezeToolStripMenuItem.Text = "Freeze";
-            this.freezeToolStripMenuItem.Click += new System.EventHandler(this.freezeToolStripMenuItem_Click);
-            // 
-            // unfrozenToolStripMenuItem
-            // 
-            this.unfrozenToolStripMenuItem.Name = "unfrozenToolStripMenuItem";
-            this.unfrozenToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
-            this.unfrozenToolStripMenuItem.Text = "Unfreeze";
-            this.unfrozenToolStripMenuItem.Click += new System.EventHandler(this.unfrozenToolStripMenuItem_Click);
-            // 
-            // treeView1ColumnMenu
-            // 
-            this.treeView1ColumnMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.thisIsATestToolStripMenuItem,
-            this.hideToolStripMenuItem,
-            this.toolStripSeparator1,
-            this.freezeToolStripMenuItem,
-            this.unfrozenToolStripMenuItem});
-            this.treeView1ColumnMenu.Name = "treeView1ColumnMenu";
-            this.treeView1ColumnMenu.Size = new System.Drawing.Size(121, 98);
             // 
             // splitContainer1
             // 
@@ -160,6 +113,7 @@
             treeNode1});
             this.treeView1.Size = new System.Drawing.Size(146, 501);
             this.treeView1.TabIndex = 0;
+            this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
             // 
             // dataGridView1
             // 
@@ -174,6 +128,29 @@
             this.dataGridView1.Size = new System.Drawing.Size(566, 536);
             this.dataGridView1.TabIndex = 0;
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.showToolStripMenuItem,
+            this.freezeToolStripMenuItem1});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(108, 48);
+            this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.treeView1ColumnMenu_Opening);
+            // 
+            // showToolStripMenuItem
+            // 
+            this.showToolStripMenuItem.Name = "showToolStripMenuItem";
+            this.showToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.showToolStripMenuItem.Text = "Show";
+            this.showToolStripMenuItem.Click += new System.EventHandler(this.showToolStripMenuItem_Click);
+            // 
+            // freezeToolStripMenuItem1
+            // 
+            this.freezeToolStripMenuItem1.Name = "freezeToolStripMenuItem1";
+            this.freezeToolStripMenuItem1.Size = new System.Drawing.Size(107, 22);
+            this.freezeToolStripMenuItem1.Text = "Freeze";
+            this.freezeToolStripMenuItem1.Click += new System.EventHandler(this.freezeToolStripMenuItem_Click);
+            // 
             // DNTViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -183,7 +160,6 @@
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "DNTViewer";
             this.Text = "DNTViewer";
-            this.treeView1ColumnMenu.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -193,23 +169,21 @@
             this.naviBand1.ClientArea.ResumeLayout(false);
             this.naviBand1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.ToolStripMenuItem thisIsATestToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem hideToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem freezeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem unfrozenToolStripMenuItem;
-        private System.Windows.Forms.ContextMenuStrip treeView1ColumnMenu;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private Guifreaks.NavigationBar.NaviBar naviBar1;
         private Guifreaks.NavigationBar.NaviBand naviBand1;
         private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem showToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem freezeToolStripMenuItem1;
 
 
 

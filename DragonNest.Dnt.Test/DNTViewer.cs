@@ -42,21 +42,19 @@ namespace DragonNest.ResourceInspection.dnt.Test
         {
             var node = treeView1.SelectedNode;
             if (node.Level != 1) return;
+            showToolStripMenuItem.Checked =  dataGridView1.Columns[node.Text].Visible;
+            freezeToolStripMenuItem1.Checked = dataGridView1.Columns[node.Text].Frozen;
+        }
+        private void showToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            dataGridView1.Columns[treeView1.SelectedNode.Text].Visible = !showToolStripMenuItem.Checked;
+
         }
 
-        private void thisIsATestToolStripMenuItem_Click(object sender, EventArgs e)
+        private void freezeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var node = treeView1.SelectedNode;
-            if (node.Level != 1) return;
-            dataGridView1.Columns[node.Text].Visible = true;
-        }
-
-        private void hideToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var node = treeView1.SelectedNode;
-            if (node.Level != 1) return;
-            dataGridView1.Columns[node.Text].Visible = false;
-
+            dataGridView1.Columns[treeView1.SelectedNode.Text].Frozen = !freezeToolStripMenuItem1.Checked;
         }
 
 
@@ -69,26 +67,13 @@ namespace DragonNest.ResourceInspection.dnt.Test
                     switch (e.Node.Level)
                     {
                         case 1:
-                            treeView1ColumnMenu.Show(e.Location.X, e.Location.Y);
+                            contextMenuStrip1.Show(Cursor.Position.X, Cursor.Position.Y);
                             break;
                     }
                     break;
             }
         }
 
-        private void freezeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var node = treeView1.SelectedNode;
-            if (node.Level != 1) return;
-            dataGridView1.Columns[node.Text].Frozen = true;
-        }
-
-        private void unfrozenToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var node = treeView1.SelectedNode;
-            if (node.Level != 1) return;
-            dataGridView1.Columns[node.Text].Frozen = false;
-        }
         
         private void naviBar1_Resize(object sender, EventArgs e)
         {
@@ -112,5 +97,7 @@ namespace DragonNest.ResourceInspection.dnt.Test
         {
             naviBar1.Width = splitContainer1.SplitterDistance;
         }
+
+      
     }
 }

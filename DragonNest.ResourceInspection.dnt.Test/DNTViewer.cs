@@ -8,9 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WeifenLuo.WinFormsUI.Docking;
 namespace DragonNest.ResourceInspection.dnt.Test
 {
-    public partial class DNTViewer : Form
+    public partial class DNTViewer : DockContent
     {
         DragonNestDataTable dnt;
 

@@ -8,17 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using WeifenLuo.WinFormsUI.Docking;
 
 namespace DragonNest.ResourceInspection.dnt.Test
 {
     public partial class Main : Form
     {
-
-
-        protected override void WndProc(ref Message m)
-        {
-            base.WndProc(ref m);
-        }
         public Main()
         {
             InitializeComponent();
@@ -30,9 +25,9 @@ namespace DragonNest.ResourceInspection.dnt.Test
                 using(FileStream fs = new FileStream(v,FileMode.Open))
                 {
                     DNTViewer viewer = new DNTViewer();
-                    viewer.MdiParent = this;
-                    viewer.LoadDNT(fs);
-                    viewer.Show();
+                    viewer.LoadDNT(fs); 
+                    viewer.Show(dockPanel1, DockState.Document);
+
                 }
         }
 
@@ -44,9 +39,8 @@ namespace DragonNest.ResourceInspection.dnt.Test
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 DNTViewer viewer = new DNTViewer();
-                viewer.MdiParent = this;
                 viewer.LoadDNT(ofd.OpenFile());
-                viewer.Show();
+                viewer.Show(dockPanel1, DockState.Document);
             }
         }
 

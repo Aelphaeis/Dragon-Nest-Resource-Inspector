@@ -15,6 +15,7 @@ namespace DragonNest.ResourceInspection.dnt.Test
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             SingleInstance.SingleApplication.Run(new Main(args));
+            //SingleInstance.SingleApplication.Run(new Parent());
         }
 
     }

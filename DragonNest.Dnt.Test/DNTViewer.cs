@@ -47,9 +47,7 @@ namespace DragonNest.ResourceInspection.dnt.Test
         }
         private void showToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
             dataGridView1.Columns[treeView1.SelectedNode.Text].Visible = !showToolStripMenuItem.Checked;
-
         }
 
         private void freezeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -97,7 +95,5 @@ namespace DragonNest.ResourceInspection.dnt.Test
         {
             naviBar1.Width = splitContainer1.SplitterDistance;
         }
-
-      
     }
 }

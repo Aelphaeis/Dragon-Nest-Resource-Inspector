@@ -38,6 +38,7 @@ namespace DragonNest.ResourceInspection.dnt.Test
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 DNTViewer viewer = new DNTViewer();
+                //viewer.MdiParent = this;
                 viewer.LoadDNT(ofd.OpenFile());
                 viewer.Show(dockPanel1, DockState.Document);
             }

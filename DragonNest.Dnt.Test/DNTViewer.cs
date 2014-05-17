@@ -26,8 +26,10 @@ namespace DragonNest.ResourceInspection.dnt.Test
             dataGridView1.DataSource = null;
             var node = treeView1.Nodes[0];
 
-            if (stream is FileStream)
-                Text += " - " + ((FileStream)stream).Name;
+            if (stream is FileStream) { 
+                Text = ((FileStream)stream).Name.Split('\\').Last();
+                toolStripStatusLabel1.Text = ((FileStream)stream).Name;
+            }
 
             dnt = new DragonNestDataTable(stream);
             dataGridView1.DataSource = dnt;
@@ -36,6 +38,7 @@ namespace DragonNest.ResourceInspection.dnt.Test
             foreach (DataColumn column in dnt.Columns)
                 node.Nodes.Add(new TreeNode(column.ColumnName));
             treeView1.ExpandAll();
+
         }
 
         private void treeView1ColumnMenu_Opening(object sender, CancelEventArgs e)

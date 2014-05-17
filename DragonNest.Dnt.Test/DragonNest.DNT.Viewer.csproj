@@ -86,9 +86,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="DNTViewer.resx">
       <DependentUpon>DNTViewer.cs</DependentUpon>
     </EmbeddedResource>

@@ -69,6 +69,7 @@
     <Compile Include="DNTViewer.Designer.cs">
       <DependentUpon>DNTViewer.cs</DependentUpon>
     </Compile>
+    <Compile Include="LinqSandbox.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -14,7 +14,7 @@ namespace DragonNest.ResourceInspection.dnt.Test
 {
     public partial class DNTViewer : DockContent
     {
-        DragonNestDataTable dnt;
+        DataTable Table;
 
         public DNTViewer()
         {
@@ -24,19 +24,35 @@ namespace DragonNest.ResourceInspection.dnt.Test
         public void LoadDNT(Stream stream)
         {
             dataGridView1.DataSource = null;
-            var node = treeView1.Nodes[0];
 
             if (stream is FileStream) { 
                 Text = ((FileStream)stream).Name.Split('\\').Last();
                 toolStripStatusLabel1.Text = ((FileStream)stream).Name;
             }
 
-            dnt = new DragonNestDataTable(stream);
-            dataGridView1.DataSource = dnt;
+            Table = new DragonNestDataTable(stream);
+            textBox1.Text = "from r in Rows select r;";
+            LoadDataSource();
+            SetTree(Table);
+        }
+
+        void LoadDataSource()
+        {
+            dataGridView1.DataSource = Table;
+        }
+
+        public void SetCommmand(String command)
+        {
+            textBox1.Text = command;
+        }
+
+        public void SetTree(DataTable tab)
+        {
+            var node = treeView1.Nodes[0];
 
             node.Nodes.Clear();
-            foreach (DataColumn column in dnt.Columns)
-                node.Nodes.Add(new TreeNode(column.ColumnName));
+            foreach (DataColumn column in tab.Columns)
+                node.Nodes.Add(new TreeNode(column.ColumnName + " - - - " + column.DataType.Name) {Name = column.ColumnName});
             treeView1.ExpandAll();
 
         }
@@ -45,17 +61,17 @@ namespace DragonNest.ResourceInspection.dnt.Test
         {
             var node = treeView1.SelectedNode;
             if (node.Level != 1) return;
-            showToolStripMenuItem.Checked =  dataGridView1.Columns[node.Text].Visible;
-            freezeToolStripMenuItem1.Checked = dataGridView1.Columns[node.Text].Frozen;
+            showToolStripMenuItem.Checked = dataGridView1.Columns[node.Name].Visible;
+            freezeToolStripMenuItem1.Checked = dataGridView1.Columns[node.Name].Frozen;
         }
         private void showToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            dataGridView1.Columns[treeView1.SelectedNode.Text].Visible = !showToolStripMenuItem.Checked;
+            dataGridView1.Columns[treeView1.SelectedNode.Name].Visible = !showToolStripMenuItem.Checked;
         }
 
         private void freezeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            dataGridView1.Columns[treeView1.SelectedNode.Text].Frozen = !freezeToolStripMenuItem1.Checked;
+            dataGridView1.Columns[treeView1.SelectedNode.Name].Frozen = !freezeToolStripMenuItem1.Checked;
         }
 
 
@@ -98,5 +114,37 @@ namespace DragonNest.ResourceInspection.dnt.Test
         {
             naviBar1.Width = splitContainer1.SplitterDistance;
         }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var clone = Table.Clone();
+                clone.Clear();
+
+                var Rows = Table.Rows.Cast<DataRow>();
+                var rows = LinqSandbox.Execute(textBox1.Text, Rows);
+
+                foreach (var v in rows)
+                    clone.ImportRow(v);
+                DNTViewer form = new DNTViewer();
+                form.Table = clone;
+
+                form.LoadDataSource();
+                form.SetTree(form.Table);
+                form.SetCommmand(textBox1.Text);
+                form.toolStripStatusLabel1.Text = String.Empty;
+                form.Show(DockPanel, DockState.Document);
+            }
+            catch(AggregateException x)
+            {
+                var msg = String.Empty;
+                foreach (var ex in x.InnerExceptions)
+                    msg += ex.Message + Environment.NewLine;
+                MessageBox.Show(msg);
+            }
+        }
+
+   
     }
 }

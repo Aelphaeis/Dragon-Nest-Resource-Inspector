@@ -38,7 +38,6 @@ namespace DragonNest.ResourceInspection.dnt.Test
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 DNTViewer viewer = new DNTViewer();
-                //viewer.MdiParent = this;
                 viewer.LoadDNT(ofd.OpenFile());
                 viewer.Show(dockPanel1, DockState.Document);
             }
@@ -47,6 +46,10 @@ namespace DragonNest.ResourceInspection.dnt.Test
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        public void AddTab(DockContent content){
+            content.Show(dockPanel1, DockState.Document);
         }
     }
 }

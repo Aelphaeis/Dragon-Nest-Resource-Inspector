@@ -14,18 +14,50 @@ namespace DragonNest.ResourceInspection.dnt.Test
 {
     public partial class DNTViewer : DockContent
     {
+
+        public static event EventHandler HideLinqEvent;
+        public static event EventHandler ShowLinqEvent;
+        public static bool ShowLinq
+        {
+            get
+            {
+                return showLinq;
+            }
+            set
+            {
+                if (!value)
+                {
+                    if (ShowLinqEvent != null)
+                        ShowLinqEvent(null, EventArgs.Empty);
+                }
+                else
+                {
+                    if (HideLinqEvent != null)
+                        HideLinqEvent(null, EventArgs.Empty);
+                }
+                showLinq = value;
+            }
+        }
+        static bool showLinq = false;
+        
         DataTable Table;
 
         public DNTViewer()
         {
             InitializeComponent();
+
+            ShowLinqEvent += (s, e) => splitContainer2.Panel1Collapsed = true;
+            HideLinqEvent += (s, e) => splitContainer2.Panel1Collapsed = false;
+
+            splitContainer2.Panel1Collapsed = (showLinq)? false:true;
         }
 
         public void LoadDNT(Stream stream)
         {
             dataGridView1.DataSource = null;
 
-            if (stream is FileStream) { 
+            if (stream is FileStream)
+            {
                 Text = ((FileStream)stream).Name.Split('\\').Last();
                 toolStripStatusLabel1.Text = ((FileStream)stream).Name;
             }
@@ -52,7 +84,7 @@ namespace DragonNest.ResourceInspection.dnt.Test
 
             node.Nodes.Clear();
             foreach (DataColumn column in tab.Columns)
-                node.Nodes.Add(new TreeNode(column.ColumnName + " - - - " + column.DataType.Name) {Name = column.ColumnName});
+                node.Nodes.Add(new TreeNode(column.ColumnName + " - - - " + column.DataType.Name) { Name = column.ColumnName });
             treeView1.ExpandAll();
 
         }
@@ -91,15 +123,17 @@ namespace DragonNest.ResourceInspection.dnt.Test
             }
         }
 
-        
+
         private void naviBar1_Resize(object sender, EventArgs e)
         {
             var obj = ((NaviBar)sender);
-            if (obj.Collapsed) { 
+            if (obj.Collapsed)
+            {
                 splitContainer1.SplitterDistance = obj.Size.Width;
                 splitContainer1.IsSplitterFixed = true;
             }
-            else{
+            else
+            {
                 splitContainer1.IsSplitterFixed = false;
                 splitContainer1.SplitterDistance = obj.Size.Width;
             }
@@ -136,15 +170,17 @@ namespace DragonNest.ResourceInspection.dnt.Test
                 form.toolStripStatusLabel1.Text = String.Empty;
                 form.Show(DockPanel, DockState.Document);
             }
-            catch(AggregateException x)
+            catch (AggregateException x)
             {
                 var msg = String.Empty;
                 foreach (var ex in x.InnerExceptions)
                     msg += ex.Message + Environment.NewLine;
                 MessageBox.Show(msg);
             }
+            catch (Exception x)
+            {
+                MessageBox.Show(x.Message);
+            }
         }
-
-   
     }
 }

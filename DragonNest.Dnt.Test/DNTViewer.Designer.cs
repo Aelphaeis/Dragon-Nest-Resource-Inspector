@@ -82,8 +82,8 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
             this.splitContainer1.Panel2.Controls.Add(this.statusStrip1);
-            this.splitContainer1.Size = new System.Drawing.Size(721, 536);
-            this.splitContainer1.SplitterDistance = 151;
+            this.splitContainer1.Size = new System.Drawing.Size(976, 735);
+            this.splitContainer1.SplitterDistance = 204;
             this.splitContainer1.TabIndex = 1;
             this.splitContainer1.SplitterMoving += new System.Windows.Forms.SplitterCancelEventHandler(this.splitContainer1_SplitterMoving);
             this.splitContainer1.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer1_SplitterMoved);
@@ -92,14 +92,13 @@
             // 
             this.naviBar1.ActiveBand = this.naviBand1;
             this.naviBar1.Controls.Add(this.naviBand1);
-            this.naviBar1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.naviBar1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.naviBar1.Location = new System.Drawing.Point(0, 0);
             this.naviBar1.MinimizedButtonWidth = 0;
             this.naviBar1.MinimizedPanelHeight = 0;
             this.naviBar1.Name = "naviBar1";
-            this.naviBar1.ShowMinimizeButton = false;
             this.naviBar1.ShowMoreOptionsButton = false;
-            this.naviBar1.Size = new System.Drawing.Size(148, 536);
+            this.naviBar1.Size = new System.Drawing.Size(204, 735);
             this.naviBar1.TabIndex = 1;
             this.naviBar1.Text = "naviBar1";
             this.naviBar1.Resize += new System.EventHandler(this.naviBar1_Resize);
@@ -112,12 +111,12 @@
             this.naviBand1.ClientArea.Controls.Add(this.treeView1);
             this.naviBand1.ClientArea.Location = new System.Drawing.Point(0, 0);
             this.naviBand1.ClientArea.Name = "ClientArea";
-            this.naviBand1.ClientArea.Size = new System.Drawing.Size(146, 501);
+            this.naviBand1.ClientArea.Size = new System.Drawing.Size(202, 700);
             this.naviBand1.ClientArea.TabIndex = 0;
             this.naviBand1.Dock = System.Windows.Forms.DockStyle.Left;
             this.naviBand1.Location = new System.Drawing.Point(1, 27);
             this.naviBand1.Name = "naviBand1";
-            this.naviBand1.Size = new System.Drawing.Size(146, 501);
+            this.naviBand1.Size = new System.Drawing.Size(202, 700);
             this.naviBand1.TabIndex = 3;
             this.naviBand1.Text = "Columns";
             // 
@@ -130,7 +129,7 @@
             treeNode1.Text = "Columns";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode1});
-            this.treeView1.Size = new System.Drawing.Size(146, 501);
+            this.treeView1.Size = new System.Drawing.Size(202, 700);
             this.treeView1.TabIndex = 0;
             this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
             // 
@@ -148,8 +147,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.dataGridView1);
-            this.splitContainer2.Size = new System.Drawing.Size(566, 514);
-            this.splitContainer2.SplitterDistance = 74;
+            this.splitContainer2.Size = new System.Drawing.Size(768, 713);
+            this.splitContainer2.SplitterDistance = 102;
             this.splitContainer2.TabIndex = 2;
             // 
             // splitContainer3
@@ -168,7 +167,7 @@
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.textBox1);
-            this.splitContainer3.Size = new System.Drawing.Size(566, 74);
+            this.splitContainer3.Size = new System.Drawing.Size(768, 102);
             this.splitContainer3.SplitterDistance = 25;
             this.splitContainer3.TabIndex = 2;
             // 
@@ -178,7 +177,7 @@
             this.toolStripButton1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(566, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(768, 25);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -198,7 +197,7 @@
             this.textBox1.Location = new System.Drawing.Point(0, 0);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(566, 45);
+            this.textBox1.Size = new System.Drawing.Size(768, 73);
             this.textBox1.TabIndex = 0;
             // 
             // dataGridView1
@@ -211,16 +210,16 @@
             this.dataGridView1.Location = new System.Drawing.Point(0, 0);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(566, 436);
+            this.dataGridView1.Size = new System.Drawing.Size(768, 607);
             this.dataGridView1.TabIndex = 0;
             // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 514);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 713);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(566, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(768, 22);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -257,7 +256,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(721, 536);
+            this.ClientSize = new System.Drawing.Size(976, 735);
             this.Controls.Add(this.splitContainer1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "DNTViewer";

@@ -17,11 +17,6 @@ namespace DragonNest.ResourceInspection.dnt.Test
 {
     public partial class Main : Form
     {
-
-       
-     
-
-
         public Main()
         {
             InitializeComponent();
@@ -55,14 +50,10 @@ namespace DragonNest.ResourceInspection.dnt.Test
             viewer.Show(dockPanel1, DockState.Document);
         }
 
-        private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            showLinqToolStripMenuItem.Checked = DNTViewer.ShowLinq;
-        }
-
         private void showLinqToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DNTViewer.ShowLinq = !showLinqToolStripMenuItem.Checked;
+            showLinqToolStripMenuItem.Checked = DNTViewer.ShowLinq;
         }
     }
 }

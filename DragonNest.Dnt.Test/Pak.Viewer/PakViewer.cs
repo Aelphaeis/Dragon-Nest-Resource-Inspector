@@ -93,12 +93,76 @@ namespace DragonNest.ResourceInspection.Pak.Viewer
         {
             if (e.Node.Nodes.Count == 0)
                 return;
+
             listView1.Items.Clear();
-            foreach(TreeNode node in e.Node.Nodes)
-                listView1.Items.Add(node.Name);
+            foreach (TreeNode node in e.Node.Nodes)
+            {
+                ListViewItem item = new ListViewItem(node.Name);
+                listView1.Items.Add(item);
+
+            }
+
+            var path = String.Empty;
+            var Node = e.Node;
+            for (int i = 0; i <= e.Node.Level; i++, path = path.Insert(0,@"\"))
+            {
+                path = path.Insert(0, Node.Text);
+                Node = Node.Parent;
+            }
+            toolStripTextBox1.Text = path;
         }
 
+        private void listView1_DoubleClick(object sender, EventArgs e)
+        {
+            if (sender == listView1)
+                if (listView1.SelectedItems.Count == 1)
+                {
+                    var Nodes = PakTree.Nodes;
+                    var path = toolStripTextBox1.Text + @"\" + listView1.SelectedItems[0].Text;
+                    var pathComponents = path.Split(new char[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
+                    
+                    foreach(var v in pathComponents)
+                        Nodes = Nodes.Find(v, false).First().Nodes;
+                    
+                    if (Nodes.Count == 0)
+                        return;
 
-        
+                    Nodes[0].TreeView.SelectedNode = Nodes[0];
+                    PakTree_AfterSelect(PakTree, new TreeViewEventArgs(Nodes[0].Parent));
+                } 
+        }
+
+        private void listView1_MouseClick(object sender, MouseEventArgs e)
+        {
+            switch(e.Button)
+            {
+                case MouseButtons.Right:
+                    if(listView1.SelectedItems.Count == 0)
+                        return;
+                    //MessageBox.Show(listView1.SelectedItems[0].Text);
+                    break;
+            }
+        }
+
+        //void RefreshPakTree()
+        //{
+        //    //To stop graphical inconsistency
+        //    PakTree.SuspendLayout();
+        //    PakTree.Nodes.Clear();
+        //    foreach (var file in pakFile.Files)
+        //    {
+        //        var pathComponents = file.FileName.Split(new char[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
+        //        var Nodes = PakTree.Nodes;
+        //        foreach (var v in pathComponents)
+        //        {
+        //            if (!Nodes.ContainsKey(v))
+        //                Nodes.Add(new TreeNode(v) { Name = v });
+        //            var next = Nodes.Find(v, false).First();
+        //            Nodes = next.Nodes;
+        //        }
+        //    }
+        //    //To update the Graphics
+        //    PakTree.ResumeLayout();
+        //}
     }
 }

@@ -16,9 +16,6 @@ namespace DragonNest.ResourceInspector.Pak
         public void PakFromStream(Stream pakStream)
         {
 
-            pakStream.Position = 0x104L;
-
-
         }
     }
 }

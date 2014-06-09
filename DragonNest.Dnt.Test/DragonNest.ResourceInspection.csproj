@@ -53,6 +53,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -71,10 +72,11 @@
       <DependentUpon>DntViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="Dnt.Viewer\LinqSandbox.cs" />
-    <Compile Include="Main.cs">
+    <Compile Include="Core\DNRIService.cs" />
+    <Compile Include="Core\Main.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Main.Designer.cs">
+    <Compile Include="Core\Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="Pak.Viewer\PakViewer.cs">
@@ -92,16 +94,20 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DragonNest.Dnt\DragonNest.ResourceInspector.Dnt.csproj">
+    <ProjectReference Include="..\DragonNest.Dnt\DragonNest.ResourceInspection.Dnt.csproj">
       <Project>{b9ee50c4-82c8-4b19-99f7-39cb7b00cf08}</Project>
-      <Name>DragonNest.ResourceInspector.Dnt</Name>
+      <Name>DragonNest.ResourceInspection.Dnt</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DragonNest.ResourceInspector.Pak\DragonNest.ResourceInspection.Pak.csproj">
+      <Project>{5b884ae2-931c-4e35-86b7-3ceaf63b1d78}</Project>
+      <Name>DragonNest.ResourceInspection.Pak</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Dnt.Viewer\DntViewer.resx">
       <DependentUpon>DntViewer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MAin.resx">
+    <EmbeddedResource Include="Core\MAin.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Pak.Viewer\PakViewer.resx">

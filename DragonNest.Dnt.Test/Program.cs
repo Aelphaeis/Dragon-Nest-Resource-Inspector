@@ -7,7 +7,9 @@ using System.Data;
 using System.Windows.Forms;
 using System.IO.Pipes;
 using System.Threading;
-namespace DragonNest.ResourceInspection.dnt.Test
+using DragonNest.ResourceInspection.Core;
+
+namespace DragonNest.ResourceInspection
 {
     class Program
     {
@@ -21,17 +23,20 @@ namespace DragonNest.ResourceInspection.dnt.Test
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             //We can determine if this is the first instance of one of not
-            if (Pipe is NamedPipeServerStream) //If it is the first instance we should open
-                using(Pipe)
-                    Application.Run(app = new Main(args));
-                
-            else //If this is not the first instance we should send information to the first instance about what this instance was suppose to do
-                foreach(var arg in args) 
-                    Send(arg);
+            //if (Pipe is NamedPipeServerStream) //If it is the first instance we should open
+            //    using (Pipe)
+            //        Application.Run(app = new Main(args));
 
-            if (Pipe is NamedPipeServerStream)
-                using(var p = new NamedPipeClientStream(pipeName))
-                    p.Connect();
+            //else //If this is not the first instance we should send information to the first instance about what this instance was suppose to do
+            //    foreach (var arg in args)
+            //        Send(arg);
+
+            //if (Pipe is NamedPipeServerStream)
+            //    using (var p = new NamedPipeClientStream(pipeName))
+                    //p.Connect();
+            var viewer = new Pak.Viewer.PakViewer();
+            viewer.LoadPakStream(new FileStream(@"E:\Programs\PlayZone\Resource09.pak", FileMode.Open));
+            Application.Run(viewer);
         }
 
         

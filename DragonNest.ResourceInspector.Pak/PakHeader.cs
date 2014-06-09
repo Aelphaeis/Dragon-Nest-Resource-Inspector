@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonNest.ResourceInspector.Pak
+namespace DragonNest.ResourceInspection.Pak
 {
     //struct PakHeader
     //{
@@ -16,8 +16,11 @@ namespace DragonNest.ResourceInspector.Pak
     //    uint  Unk2;
     //    uint  Null2[0xBC];
     //} Header;
-    public struct PakHeader
+    public class PakHeader
     {
-       
+        public const string Identifier = "EyedentityGames Packing File 0.1";
+        public uint FileCount;
+        public uint TableOffset;
+      
     }
 }

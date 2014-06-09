@@ -7,7 +7,7 @@
     <ProjectGuid>{62DAEDF3-D285-43DF-9785-063C12CD59FD}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DragonNest.ResourceInspection.dnt.Test</RootNamespace>
+    <RootNamespace>DragonNest.ResourceInspection</RootNamespace>
     <AssemblyName>Dragon Nest Table Viewer</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -64,18 +64,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DNTViewer.cs">
+    <Compile Include="Dnt.Viewer\DntViewer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DNTViewer.Designer.cs">
-      <DependentUpon>DNTViewer.cs</DependentUpon>
+    <Compile Include="Dnt.Viewer\DntViewer.Designer.cs">
+      <DependentUpon>DntViewer.cs</DependentUpon>
     </Compile>
-    <Compile Include="LinqSandbox.cs" />
+    <Compile Include="Dnt.Viewer\LinqSandbox.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pak.Viewer\PakViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Pak.Viewer\PakViewer.Designer.cs">
+      <DependentUpon>PakViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -86,17 +92,20 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DragonNest.Dnt\DragonNest.DNT.csproj">
+    <ProjectReference Include="..\DragonNest.Dnt\DragonNest.ResourceInspector.Dnt.csproj">
       <Project>{b9ee50c4-82c8-4b19-99f7-39cb7b00cf08}</Project>
-      <Name>DragonNest.DNT</Name>
+      <Name>DragonNest.ResourceInspector.Dnt</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DNTViewer.resx">
-      <DependentUpon>DNTViewer.cs</DependentUpon>
+    <EmbeddedResource Include="Dnt.Viewer\DntViewer.resx">
+      <DependentUpon>DntViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MAin.resx">
       <DependentUpon>Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pak.Viewer\PakViewer.resx">
+      <DependentUpon>PakViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -109,6 +118,7 @@
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

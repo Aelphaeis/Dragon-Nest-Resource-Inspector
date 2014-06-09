@@ -1,4 +1,4 @@
-﻿namespace DragonNest.ResourceInspection.dnt.Test
+﻿namespace DragonNest.ResourceInspection
 {
     partial class Main
     {

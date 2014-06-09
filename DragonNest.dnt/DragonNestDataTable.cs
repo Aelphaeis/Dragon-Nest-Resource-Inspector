@@ -5,7 +5,7 @@ using System.Text;
 using System.Data;
 using System.IO;
 
-namespace DragonNest.ResourceInspection.dnt
+namespace DragonNest.ResourceInspection.Dnt
 {
     public class DragonNestDataTable : DataTable
     {

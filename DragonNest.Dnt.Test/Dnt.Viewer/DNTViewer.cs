@@ -10,9 +10,10 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 using Guifreaks.NavigationBar;
-namespace DragonNest.ResourceInspection.dnt.Test
+
+namespace DragonNest.ResourceInspection.Dnt.Viewer
 {
-    public partial class DNTViewer : DockContent
+    public partial class DntViewer : DockContent
     {
 
         public static event EventHandler HideLinqEvent;
@@ -42,7 +43,7 @@ namespace DragonNest.ResourceInspection.dnt.Test
         
         DataTable Table;
 
-        public DNTViewer()
+        public DntViewer()
         {
             InitializeComponent();
 
@@ -161,7 +162,7 @@ namespace DragonNest.ResourceInspection.dnt.Test
 
                 foreach (var v in rows)
                     clone.ImportRow(v);
-                DNTViewer form = new DNTViewer();
+                DntViewer form = new DntViewer();
                 form.Table = clone;
 
                 form.LoadDataSource();

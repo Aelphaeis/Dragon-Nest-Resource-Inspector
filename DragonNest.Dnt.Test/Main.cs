@@ -12,8 +12,9 @@ using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.IO.Pipes;
 using WeifenLuo.WinFormsUI.Docking;
+using DragonNest.ResourceInspection.Dnt.Viewer;
 
-namespace DragonNest.ResourceInspection.dnt.Test
+namespace DragonNest.ResourceInspection
 {
     public partial class Main : Form
     {
@@ -45,15 +46,16 @@ namespace DragonNest.ResourceInspection.dnt.Test
 
         public void OpenWindowFromStream(Stream stream) 
         {
-            DNTViewer viewer = new DNTViewer();
+
+            DntViewer viewer = new DntViewer();
             viewer.LoadDNT(stream);
             viewer.Show(dockPanel1, DockState.Document);
         }
 
         private void showLinqToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DNTViewer.ShowLinq = !showLinqToolStripMenuItem.Checked;
-            showLinqToolStripMenuItem.Checked = DNTViewer.ShowLinq;
+            DntViewer.ShowLinq = !showLinqToolStripMenuItem.Checked;
+            showLinqToolStripMenuItem.Checked = DntViewer.ShowLinq;
         }
     }
 }

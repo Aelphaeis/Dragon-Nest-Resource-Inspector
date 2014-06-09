@@ -35,45 +35,50 @@ namespace DragonNest.ResourceInspection.Core
             @this.AddServiceEndpoint(typeof(DNRIService), new NetNamedPipeBinding(), PipeService);
             @this.BeginOpen((IAsyncResult ar) => @this.EndOpen(ar), null);
 
-            foreach (var v in args)
-                using (FileStream fs = new FileStream(v, FileMode.Open))
-                    OpenDntWindowFromStream(fs);
+            //foreach (var v in args)
+            //    using (FileStream fs = new FileStream(v, FileMode.Open))
+            //        OpenDntWindowFromStream(fs);
         }
 
 
-        private void dntToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void dntToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var ofd = new OpenFileDialog() { Filter = "DNT | *.dnt"};
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                Task.Run(() => OpenDntWindowFromStream(ofd.OpenFile()));
+            {
+                (await Task<DntViewer>.Run(() => { return GetDntWindowFromStream(ofd.OpenFile()); })).Show(dockPanel1, DockState.Document);
+                //OpenDntWindowFromStream(ofd.OpenFile());
+            }
+                //Task.Run(() => OpenDntWindowFromStream(ofd.OpenFile()));
         }
 
-        public void OpenDntWindowFromStream(Stream stream) 
+        private async void pakToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var ofd = new OpenFileDialog() { Filter = "PAK | *.pak" };
+            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                (await Task<PakViewer>.Run(() => { return GetPakWindowFromStream(ofd.OpenFile()); })).Show(dockPanel1, DockState.Document);
+            }
+        }
+        public PakViewer GetPakWindowFromStream(Stream stream)
+        {
+            PakViewer viewer = new PakViewer();
+            viewer.LoadPakStream(stream);
+            return viewer;
+            //viewer.Show(dockPanel1, DockState.Document);
+        }
+        public void OpenDnt(string path)
+        {
+            using (FileStream fs = new FileStream(path, FileMode.Open));
+                //OpenDntWindowFromStream(fspublic
+        }
+        DntViewer GetDntWindowFromStream(Stream stream)
         {
 
             DntViewer viewer = new DntViewer();
             viewer.LoadDNT(stream);
-            viewer.Show(dockPanel1, DockState.Document);
-        }
-
-        public void OpenPakWindowFromStream(Stream stream)
-        {
-            PakViewer viewer = new PakViewer();
-            viewer.LoadPakStream(stream);
-            viewer.Show(dockPanel1, DockState.Document);
-        }
-             private void pakToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var ofd = new OpenFileDialog() { Filter = "PAK | *.pak" };
-            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                Task.Run(() => OpenPakWindowFromStream(ofd.OpenFile()));
-        }
-
-
-        public void OpenDnt(string path)
-        {
-            using (FileStream fs = new FileStream(path, FileMode.Open))
-                OpenDntWindowFromStream(fs);
+            return viewer;
+            //viewer.Show(dockPanel1, DockState.Document);
         }
      
         private void showLinqToolStripMenuItem_Click(object sender, EventArgs e)
@@ -85,13 +90,10 @@ namespace DragonNest.ResourceInspection.Core
         {
             Close();
         }
-
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
 
             Task.Run(() => @this.BeginClose((IAsyncResult ar) => @this.EndClose(ar), null));
         }
-
-   
     }
 }

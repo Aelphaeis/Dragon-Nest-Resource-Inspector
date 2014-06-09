@@ -12,17 +12,16 @@ using DragonNest.ResourceInspection.Pak;
 using DragonNest.ResourceInspector.Pak;
 
 using Guifreaks.NavigationBar;
+using WeifenLuo.WinFormsUI.Docking;
 namespace DragonNest.ResourceInspection.Pak.Viewer
 {
-    public partial class PakViewer : Form
+    public partial class PakViewer : DockContent
     {
         Stream pakStream;
         PakFile pakFile;
         public PakViewer()
         {
             InitializeComponent();
-            toolStripTextBox1.Dock = DockStyle.Fill;
-            
         }
 
         private void PakViewer_Load(object sender, EventArgs e)
@@ -57,11 +56,6 @@ namespace DragonNest.ResourceInspection.Pak.Viewer
             }
             //To update the Graphics
             PakTree.ResumeLayout();
-        }
-
-        void RefreshDetailView()
-        {
-
         }
 
         private void naviBar1_Resize(object sender, EventArgs e)

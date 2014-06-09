@@ -13,6 +13,7 @@ using System.Diagnostics;
 using System.IO.Pipes;
 using WeifenLuo.WinFormsUI.Docking;
 using DragonNest.ResourceInspection.Dnt.Viewer;
+using DragonNest.ResourceInspection.Pak.Viewer;
 using System.ServiceModel;
 
 namespace DragonNest.ResourceInspection.Core
@@ -36,17 +37,18 @@ namespace DragonNest.ResourceInspection.Core
 
             foreach (var v in args)
                 using (FileStream fs = new FileStream(v, FileMode.Open))
-                    OpenWindowFromStream(fs);
+                    OpenDntWindowFromStream(fs);
         }
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var ofd = new OpenFileDialog();
-            ofd.Filter = "DNT | *.dnt";
 
+
+        private void dntToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var ofd = new OpenFileDialog() { Filter = "DNT | *.dnt"};
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                OpenWindowFromStream(ofd.OpenFile());
+                Task.Run(() => OpenDntWindowFromStream(ofd.OpenFile()));
         }
-        public void OpenWindowFromStream(Stream stream) 
+
+        public void OpenDntWindowFromStream(Stream stream) 
         {
 
             DntViewer viewer = new DntViewer();
@@ -54,10 +56,24 @@ namespace DragonNest.ResourceInspection.Core
             viewer.Show(dockPanel1, DockState.Document);
         }
 
+        public void OpenPakWindowFromStream(Stream stream)
+        {
+            PakViewer viewer = new PakViewer();
+            viewer.LoadPakStream(stream);
+            viewer.Show(dockPanel1, DockState.Document);
+        }
+             private void pakToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var ofd = new OpenFileDialog() { Filter = "PAK | *.pak" };
+            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                Task.Run(() => OpenPakWindowFromStream(ofd.OpenFile()));
+        }
+
+
         public void OpenDnt(string path)
         {
             using (FileStream fs = new FileStream(path, FileMode.Open))
-                OpenWindowFromStream(fs);
+                OpenDntWindowFromStream(fs);
         }
      
         private void showLinqToolStripMenuItem_Click(object sender, EventArgs e)
@@ -72,7 +88,10 @@ namespace DragonNest.ResourceInspection.Core
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
-            @this.BeginClose((IAsyncResult ar) => @this.EndClose(ar), null);
+
+            Task.Run(() => @this.BeginClose((IAsyncResult ar) => @this.EndClose(ar), null));
         }
+
+   
     }
 }

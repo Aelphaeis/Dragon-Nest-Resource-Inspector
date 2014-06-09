@@ -34,25 +34,27 @@ namespace DragonNest.ResourceInspection
             //if (Pipe is NamedPipeServerStream)
             //    using (var p = new NamedPipeClientStream(pipeName))
                     //p.Connect();
-            var viewer = new Pak.Viewer.PakViewer();
-            viewer.LoadPakStream(new FileStream(@"E:\Programs\PlayZone\Resource09.pak", FileMode.Open));
-            Application.Run(viewer);
+            //var viewer = new Pak.Viewer.PakViewer();
+            //viewer.LoadPakStream(new FileStream(@"E:\Programs\PlayZone\Resource09.pak", FileMode.Open));
+            Application.Run(new Main());
         }
 
         
-        static Program()
-        {
-            //try {
-            //    var p = new NamedPipeServerStream(pipeName);
-            //    new Thread(listen).Start();
-            //    Pipe = p;
-            //}
-            //catch {
-            //    var p = new NamedPipeClientStream(pipeName);
-            //    p.Connect();
-            //    Pipe = p;
-            //}
-        }
+        //static Program()
+        //{
+        //    try
+        //    {
+        //        var p = new NamedPipeServerStream(pipeName);
+        //        new Thread(listen).Start();
+        //        Pipe = p;
+        //    }
+        //    catch
+        //    {
+        //        var p = new NamedPipeClientStream(pipeName);
+        //        p.Connect();
+        //        Pipe = p;
+        //    }
+        //}
 
         //static void listen()
         //{

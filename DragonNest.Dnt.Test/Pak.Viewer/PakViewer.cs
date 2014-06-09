@@ -21,8 +21,15 @@ namespace DragonNest.ResourceInspection.Pak.Viewer
         public PakViewer()
         {
             InitializeComponent();
+            toolStripTextBox1.Dock = DockStyle.Fill;
+            
         }
 
+        private void PakViewer_Load(object sender, EventArgs e)
+        {
+            toolStripTextBox1.Width = toolStrip1.Size.Width - 4;
+            toolStrip1.SizeChanged += (s, a) => toolStripTextBox1.Width = toolStrip1.Size.Width - 4;
+        }
         public void LoadPakStream(Stream stream)
         {
             if (pakStream != null)  pakStream.Close();
@@ -35,7 +42,6 @@ namespace DragonNest.ResourceInspection.Pak.Viewer
         {
             //To stop graphical inconsistency
             PakTree.SuspendLayout();
-
             PakTree.Nodes.Clear();
             foreach(var file in pakFile.Files)
             {
@@ -49,7 +55,6 @@ namespace DragonNest.ResourceInspection.Pak.Viewer
                     Nodes = next.Nodes;
                 }
             }
-
             //To update the Graphics
             PakTree.ResumeLayout();
         }
@@ -84,6 +89,16 @@ namespace DragonNest.ResourceInspection.Pak.Viewer
                 pakStream.Close();
         }
 
-      
+        private void PakTree_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if (e.Node.Nodes.Count == 0)
+                return;
+            listView1.Items.Clear();
+            foreach(TreeNode node in e.Node.Nodes)
+                listView1.Items.Add(node.Name);
+        }
+
+
+        
     }
 }

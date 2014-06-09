@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Columns");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Columns");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DntViewer));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.naviBar1 = new Guifreaks.NavigationBar.NaviBar(this.components);
@@ -125,10 +125,10 @@
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView1.Location = new System.Drawing.Point(0, 0);
             this.treeView1.Name = "treeView1";
-            treeNode1.Name = "Node0";
-            treeNode1.Text = "Columns";
+            treeNode3.Name = "Node0";
+            treeNode3.Text = "Columns";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1});
+            treeNode3});
             this.treeView1.Size = new System.Drawing.Size(202, 700);
             this.treeView1.TabIndex = 0;
             this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);

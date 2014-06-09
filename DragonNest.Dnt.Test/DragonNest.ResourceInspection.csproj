@@ -107,7 +107,7 @@
     <EmbeddedResource Include="Dnt.Viewer\DntViewer.resx">
       <DependentUpon>DntViewer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Core\MAin.resx">
+    <EmbeddedResource Include="Core\Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Pak.Viewer\PakViewer.resx">

@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ionic.Zlib.CF">
+      <HintPath>..\..\..\..\..\Downloads\DotNetZipLib-DevKit-v1.9\zlib-v1.9-CompactFramework\Release\Ionic.Zlib.CF.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />

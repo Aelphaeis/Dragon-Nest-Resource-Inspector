@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using Ionic.Zlib;
 namespace DragonNest.ResourceInspection.Pak
 {
     //struct FileHeader
@@ -18,29 +19,48 @@ namespace DragonNest.ResourceInspection.Pak
     //};
     public struct FileHeader
     {
-        public string FileName;
-        public uint SizeDummy;    //  <format=hex>;
-        public uint OriginalSize;//  <format=hex>;
-        public uint CompressedSize;// <format=hex>;
-        public uint FileOffset;//  <format=hex>;
-        public uint Unknown;
-        public uint padding;
-
-        //public static FileHeader FromStream(Stream stream)
-        //{
-
-        //}
         public static FileHeader FromBinaryReader(BinaryReader reader)
         {
             FileHeader header = new FileHeader();
-            header.FileName = Encoding.ASCII.GetString(reader.ReadBytes(0x100));
+            header.Path = Encoding.ASCII.GetString(reader.ReadBytes(0x100));
             header.SizeDummy = reader.ReadUInt32();
             header.OriginalSize = reader.ReadUInt32();
             header.CompressedSize = reader.ReadUInt32();
             header.FileOffset = reader.ReadUInt32();
-            header. Unknown = reader.ReadUInt32();
+            header.Unknown = reader.ReadUInt32();
             reader.ReadBytes(sizeof(uint) * 10);
             return header;
+        }
+        public string Name 
+        { 
+            get 
+            { 
+                return Path.Split(new string[] { @"\" }, StringSplitOptions.RemoveEmptyEntries).Last().Trim('\0'); 
+            } 
+        }
+        public string Path { get; set; }
+        public uint SizeDummy { get; set; }    //  <format=hex>;
+        public uint OriginalSize { get; set; }//  <format=hex>;
+        public uint CompressedSize { get; set; }// <format=hex>;
+        public uint FileOffset { get; set; }//  <format=hex>;
+        public uint Unknown { get; set; }
+        public uint padding { get; set;}
+
+        internal PakFile file;
+
+        public Stream GetStream()
+        {
+
+            if (file == null)
+                throw new NotSupportedException("File Header must be associated with pak file to get filestream");
+
+            using(var fs = File.Open(file.Path, FileMode.Open, FileAccess.Read, FileShare.Read))
+            using (var reader =  new BinaryReader(fs))
+            {
+                fs.Position = FileOffset;
+                var data = reader.ReadBytes(Convert.ToInt32(CompressedSize));
+                return new MemoryStream(ZlibStream.UncompressBuffer(data));
+            }
         }
     }
 }

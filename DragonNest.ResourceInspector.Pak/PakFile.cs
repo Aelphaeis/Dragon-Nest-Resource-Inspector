@@ -9,6 +9,8 @@ namespace DragonNest.ResourceInspection.Pak
 {
     public class PakFile
     {
+        public String Path { get; set; }
+        public String Name { get; set; }
         public PakHeader Header { get; set; }
         public IList<FileHeader> Files { get; set; }
 
@@ -30,6 +32,11 @@ namespace DragonNest.ResourceInspection.Pak
                 if (PakHeader.Identifier != Encoding.ASCII.GetString(reader.ReadBytes(0x20)))
                     throw new Exception("Invalid File Format");
 
+                if (stream is FileStream) { 
+                    Path = ((FileStream)stream).Name;
+                    Name = Path.Split(new string[] { @"\" }, StringSplitOptions.RemoveEmptyEntries).Last();
+                }
+
                 //This is where the FileCount and File Offset are stored.
                 stream.Position = 0x104L;
                 Header.FileCount = reader.ReadUInt32();
@@ -37,8 +44,11 @@ namespace DragonNest.ResourceInspection.Pak
 
                 //We'll begin reading our file headers at the first offset Position
                 stream.Position = Header.TableOffset;
-                for (int i = 0; i < Header.FileCount; i++)
-                    Files.Add(FileHeader.FromBinaryReader(reader));
+                for (int i = 0; i < Header.FileCount; i++) {
+                    var header = FileHeader.FromBinaryReader(reader);
+                    header.file = this;
+                    Files.Add(header);
+                }
             }
         }
     }

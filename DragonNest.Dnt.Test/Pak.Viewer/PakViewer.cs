@@ -30,7 +30,6 @@ namespace DragonNest.ResourceInspection.Pak.Viewer
                 status = value;
                 if (StatusChanged != null)
                     StatusChanged(this, EventArgs.Empty); 
-                
             }
         }
         int status;
@@ -76,7 +75,7 @@ namespace DragonNest.ResourceInspection.Pak.Viewer
 
                 Status = Convert.ToInt32(Decimal.Divide(i, pakFile.Header.FileCount) * 95 + 5);
 
-                var pathComponents = file.FileName.Split(new char[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
+                var pathComponents = file.Path.Split(new char[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
                 var Nodes = PakTree.Nodes;
                 foreach (var v in pathComponents)
                 {

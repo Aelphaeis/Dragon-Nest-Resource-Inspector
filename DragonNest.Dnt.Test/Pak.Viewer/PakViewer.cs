@@ -74,12 +74,7 @@ namespace DragonNest.ResourceInspection.Pak.Viewer
             {
                 var file = pakFile.Files[i];
 
-
-                var a = Decimal.Divide(i, pakFile.Header.FileCount);
-                var b = a * 95;
-                var c = b+5;
-                
-                Status = Convert.ToInt32(c);
+                Status = Convert.ToInt32(Decimal.Divide(i, pakFile.Header.FileCount) * 95 + 5);
 
                 var pathComponents = file.FileName.Split(new char[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
                 var Nodes = PakTree.Nodes;
@@ -173,5 +168,7 @@ namespace DragonNest.ResourceInspection.Pak.Viewer
                     break;
             }
         }
+
+     
     }
 }

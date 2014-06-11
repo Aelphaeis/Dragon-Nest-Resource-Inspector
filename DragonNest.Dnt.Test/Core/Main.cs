@@ -31,6 +31,7 @@ namespace DragonNest.ResourceInspection.Core
         public Main()
         {
             InitializeComponent();
+            statusStrip1.CanOverflow = true;
         }
 
         public Main(String [] args) : this()
@@ -51,10 +52,7 @@ namespace DragonNest.ResourceInspection.Core
                                 channel.OpenPak(argument);
                         }
                         channel.Activate();
-                        //This prevents the system from trying to access this object in a disposed state.
-                        Visible = false;
                         Close();
-                        //Invoke(new Action(() => Close()));
                     }
                 }
             }
@@ -76,22 +74,15 @@ namespace DragonNest.ResourceInspection.Core
         }
 
         #region Service Implementations
-        public async void OpenDnt(string path)
+        public void OpenDnt(string path)
         {
-            using (FileStream fs = new FileStream(path, FileMode.Open))
-                (await Task<DntViewer>.Run(() => { return GetDntWindowFromStream(fs); })).Show(dockPanel1, DockState.Document);
+            OpenDnt(new FileStream(path, FileMode.Open));
         }
 
         public void OpenPak(string path)
         {
             OpenPak(new FileStream(path, FileMode.Open));
         }
-
-        public void OpenPak(Stream stream)
-        {
-            PakOpenerWorker.RunWorkerAsync(stream);
-        }
-
         public bool IsOnline()
         {
             return true;
@@ -100,11 +91,18 @@ namespace DragonNest.ResourceInspection.Core
         #endregion
 
         #region Prviate Methods
-        DntViewer GetDntWindowFromStream(FileStream stream)
+        void OpenPak(Stream stream)
         {
-            DntViewer viewer = new DntViewer();
-            viewer.LoadDntStream(stream);
-            return viewer;
+            var PakOpenWorker = new BackgroundWorker();
+            PakOpenWorker.DoWork += PakOpenerWorker_DoWork;
+            PakOpenWorker.RunWorkerAsync(stream);
+        }
+
+        void OpenDnt(Stream stream)
+        {
+            var DntOpenWorker = new BackgroundWorker();
+            DntOpenWorker.DoWork += DntOpenerWorker_DoWork;
+            DntOpenWorker.RunWorkerAsync(stream);
         }
 
         #region Event Handlers
@@ -124,18 +122,18 @@ namespace DragonNest.ResourceInspection.Core
                 @this.Close();
             }
         }
-        private async void dntToolStripMenuItem_Click(object sender, EventArgs e)
+        private void dntToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var ofd = new OpenFileDialog() { Filter = "DNT | *.dnt" };
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                (await Task<DntViewer>.Run(() => { return GetDntWindowFromStream((FileStream)ofd.OpenFile()); })).Show(dockPanel1, DockState.Document);
+                OpenDnt(ofd.OpenFile());
         }
 
         private void pakToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var ofd = new OpenFileDialog() { Filter = "PAK | *.pak" };
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                    PakOpenerWorker.RunWorkerAsync(ofd.OpenFile());
+                OpenPak(ofd.OpenFile());
         }
         private void PakOpenerWorker_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -156,6 +154,29 @@ namespace DragonNest.ResourceInspection.Core
             Invoke(new Action(() =>
             {
                 viewer.Show(dockPanel1,DockState.Document);
+                statusStrip1.Items.Remove(bar);
+                statusStrip1.Items.Remove(label);
+                stream.Dispose();
+            }));
+        }
+
+        private void DntOpenerWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            var stream = e.Argument as Stream;
+            var worker = sender as BackgroundWorker;
+            bool IsFileStream = (stream is FileStream) ? true : false;
+
+            ToolStripProgressBar bar = new ToolStripProgressBar() { Style = ProgressBarStyle.Continuous, Maximum = 100, Value = 0 };
+            ToolStripLabel label = new ToolStripLabel("Loading : " + ((IsFileStream) ? ((FileStream)stream).Name : "File"));
+            ToolStripItem[] items = { label, bar };
+
+            DntViewer viewer = new DntViewer();
+            viewer.StatusChanged += (s, a) => Invoke(new Action(() => bar.Value = viewer.Status));
+            Invoke(new Action(() => statusStrip1.Items.AddRange(items)));
+            viewer.LoadDntStream(stream);
+            Invoke(new Action(() =>
+            {
+                viewer.Show(dockPanel1, DockState.Document);
                 statusStrip1.Items.Remove(bar);
                 statusStrip1.Items.Remove(label);
                 stream.Dispose();

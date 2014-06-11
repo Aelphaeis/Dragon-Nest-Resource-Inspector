@@ -18,6 +18,20 @@ namespace DragonNest.ResourceInspection.Dnt.Viewer
 
         public static event EventHandler HideLinqEvent;
         public static event EventHandler ShowLinqEvent;
+
+        public event EventHandler StatusChanged;
+        
+        public int Status{
+            get{
+                return status;
+            }
+            set{
+                status = value;
+                if(StatusChanged!=null)
+                    StatusChanged(this, EventArgs.Empty);
+            }
+        }
+        int status;
         public static bool ShowLinq
         {
             get
@@ -49,7 +63,6 @@ namespace DragonNest.ResourceInspection.Dnt.Viewer
 
             ShowLinqEvent += (s, e) => splitContainer2.Panel1Collapsed = true;
             HideLinqEvent += (s, e) => splitContainer2.Panel1Collapsed = false;
-
             splitContainer2.Panel1Collapsed = (showLinq)? false:true;
         }
 
@@ -63,10 +76,18 @@ namespace DragonNest.ResourceInspection.Dnt.Viewer
                 toolStripStatusLabel1.Text = ((FileStream)stream).Name;
             }
 
-            Table = new DragonNestDataTable(stream);
+            var dnt = new DragonNestDataTable();
+            dnt.StatusChanged += dnt_StatusChanged;
+            Table = dnt.LoadDntStream(stream);
             textBox1.Text = "from r in Rows select r;";
             LoadDataSource();
             SetTree(Table);
+        }
+
+        void dnt_StatusChanged(object sender, EventArgs e)
+        {
+            var s = sender as DragonNestDataTable;
+            Status = s.Status;
         }
 
         void LoadDataSource()
@@ -183,5 +204,7 @@ namespace DragonNest.ResourceInspection.Dnt.Viewer
                 MessageBox.Show(x.Message);
             }
         }
+
+
     }
 }

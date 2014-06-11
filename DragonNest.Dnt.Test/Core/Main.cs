@@ -58,7 +58,7 @@ namespace DragonNest.ResourceInspection.Core
                     }
                 }
             }
-            catch(Exception e)
+            catch
             {
                 @this = new ServiceHost(this, new Uri(PipeName));
                 @this.AddServiceEndpoint(typeof(DNRIService), new NetNamedPipeBinding(), PipeService);

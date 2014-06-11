@@ -18,7 +18,7 @@ namespace DragonNest.ResourceInspection.Core
         [OperationContract]
         bool IsOnline();
 
-
-
+        [OperationContract]
+        void Activate();
     }
 }

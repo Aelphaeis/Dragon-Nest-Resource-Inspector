@@ -49,6 +49,7 @@ namespace DragonNest.ResourceInspection.Core
                             else if (argTrim.EndsWith(".dnt"))
                                 channel.OpenPak(argument);
                         }
+                        channel.Activate();
                         Close();
                     }
                 }
@@ -88,6 +89,7 @@ namespace DragonNest.ResourceInspection.Core
         {
             return true;
         }
+
         #endregion
 
         #region Prviate Methods

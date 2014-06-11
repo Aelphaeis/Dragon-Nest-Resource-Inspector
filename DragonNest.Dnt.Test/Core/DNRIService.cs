@@ -11,5 +11,14 @@ namespace DragonNest.ResourceInspection.Core
     {
         [OperationContract]
         void OpenDnt(string path);
+
+        [OperationContract]
+        void OpenPak(string path);
+
+        [OperationContract]
+        bool IsOnline();
+
+
+
     }
 }

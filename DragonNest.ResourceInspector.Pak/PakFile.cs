@@ -18,10 +18,11 @@ namespace DragonNest.ResourceInspection.Pak
             Files = new List<FileHeader>();
         }
 
-        public PakFile(FileStream stream) : this()
+        public PakFile(Stream stream) : this()
         {
             //If we can't seek, we can't parse the stream
-            
+            if (!stream.CanSeek)
+                throw new Exception("Unable to Seek through Stream");
             //We don't own the stream, so leave open is set to true
             try { 
                 using(var reader = new BinaryReader(stream,Encoding.Default, true))

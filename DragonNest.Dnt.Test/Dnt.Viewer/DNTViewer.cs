@@ -53,7 +53,7 @@ namespace DragonNest.ResourceInspection.Dnt.Viewer
             splitContainer2.Panel1Collapsed = (showLinq)? false:true;
         }
 
-        public void LoadDNT(Stream stream)
+        public void LoadDntStream(Stream stream)
         {
             dataGridView1.DataSource = null;
 

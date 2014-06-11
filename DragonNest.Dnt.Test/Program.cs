@@ -18,7 +18,9 @@ namespace DragonNest.ResourceInspection
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Main(args));
+            var form = new Main(args);
+            if(!form.IsDisposed)
+                Application.Run(form);
         }
     }
 

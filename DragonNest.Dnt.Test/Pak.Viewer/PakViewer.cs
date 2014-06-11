@@ -17,6 +17,25 @@ namespace DragonNest.ResourceInspection.Pak.Viewer
 {
     public partial class PakViewer : DockContent
     {
+
+        public event EventHandler StatusChanged; 
+        public int Status
+        {
+            get
+            {
+                return status;
+            }
+            set
+            {
+                status = value;
+                if (StatusChanged != null)
+                    StatusChanged(this, EventArgs.Empty); 
+                
+            }
+        }
+        int status;
+
+
         Stream pakStream;
         PakFile pakFile;
         public PakViewer()
@@ -29,11 +48,19 @@ namespace DragonNest.ResourceInspection.Pak.Viewer
             toolStripTextBox1.Width = toolStrip1.Size.Width - 4;
             toolStrip1.SizeChanged += (s, a) => toolStripTextBox1.Width = toolStrip1.Size.Width - 4;
         }
-        public void LoadPakStream(Stream stream)
+        public void LoadPakStream(Stream stream) 
         {
-            if (pakStream != null)  pakStream.Close();
-            pakFile = new PakFile(pakStream = stream);
+            Status = 0;
+            if (pakStream != null)  
+                pakStream.Close();
 
+            Status = 5;
+
+            if (stream is FileStream) { 
+                Text = ((FileStream)stream).Name.Split('\\').Last();
+                toolStripStatusLabel1.Text = ((FileStream)stream).Name;
+            }
+            pakFile = new PakFile(pakStream = stream);
             RefreshPakTree();
         }
 
@@ -42,11 +69,21 @@ namespace DragonNest.ResourceInspection.Pak.Viewer
             //To stop graphical inconsistency
             PakTree.SuspendLayout();
             PakTree.Nodes.Clear();
-            foreach(var file in pakFile.Files)
+
+            for (int i = 0; i < pakFile.Header.FileCount; i++ )
             {
-                var pathComponents = file.FileName.Split(new char [] {'\\'},StringSplitOptions.RemoveEmptyEntries);
+                var file = pakFile.Files[i];
+
+
+                var a = Decimal.Divide(i, pakFile.Header.FileCount);
+                var b = a * 95;
+                var c = b+5;
+                
+                Status = Convert.ToInt32(c);
+
+                var pathComponents = file.FileName.Split(new char[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
                 var Nodes = PakTree.Nodes;
-                foreach(var v in pathComponents)
+                foreach (var v in pathComponents)
                 {
                     if (!Nodes.ContainsKey(v))
                         Nodes.Add(new TreeNode(v) { Name = v });
@@ -133,30 +170,8 @@ namespace DragonNest.ResourceInspection.Pak.Viewer
                 case MouseButtons.Right:
                     if(listView1.SelectedItems.Count == 0)
                         return;
-                    //MessageBox.Show(listView1.SelectedItems[0].Text);
                     break;
             }
         }
-
-        //void RefreshPakTree()
-        //{
-        //    //To stop graphical inconsistency
-        //    PakTree.SuspendLayout();
-        //    PakTree.Nodes.Clear();
-        //    foreach (var file in pakFile.Files)
-        //    {
-        //        var pathComponents = file.FileName.Split(new char[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
-        //        var Nodes = PakTree.Nodes;
-        //        foreach (var v in pathComponents)
-        //        {
-        //            if (!Nodes.ContainsKey(v))
-        //                Nodes.Add(new TreeNode(v) { Name = v });
-        //            var next = Nodes.Find(v, false).First();
-        //            Nodes = next.Nodes;
-        //        }
-        //    }
-        //    //To update the Graphics
-        //    PakTree.ResumeLayout();
-        //}
     }
 }

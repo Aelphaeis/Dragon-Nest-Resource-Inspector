@@ -35,9 +35,6 @@ namespace DragonNest.ResourceInspection.Core
             @this.AddServiceEndpoint(typeof(DNRIService), new NetNamedPipeBinding(), PipeService);
             @this.BeginOpen((IAsyncResult ar) => @this.EndOpen(ar), null);
 
-            //foreach (var v in args)
-            //    using (FileStream fs = new FileStream(v, FileMode.Open))
-            //        OpenDntWindowFromStream(fs);
         }
 
 
@@ -45,11 +42,7 @@ namespace DragonNest.ResourceInspection.Core
         {
             var ofd = new OpenFileDialog() { Filter = "DNT | *.dnt"};
             if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
                 (await Task<DntViewer>.Run(() => { return GetDntWindowFromStream(ofd.OpenFile()); })).Show(dockPanel1, DockState.Document);
-                //OpenDntWindowFromStream(ofd.OpenFile());
-            }
-                //Task.Run(() => OpenDntWindowFromStream(ofd.OpenFile()));
         }
 
         private async void pakToolStripMenuItem_Click(object sender, EventArgs e)
@@ -65,20 +58,20 @@ namespace DragonNest.ResourceInspection.Core
             PakViewer viewer = new PakViewer();
             viewer.LoadPakStream(stream);
             return viewer;
-            //viewer.Show(dockPanel1, DockState.Document);
         }
-        public void OpenDnt(string path)
+
+        public async void OpenDnt(string path)
         {
-            using (FileStream fs = new FileStream(path, FileMode.Open));
-                //OpenDntWindowFromStream(fspublic
+            using (FileStream fs = new FileStream(path, FileMode.Open))
+                (await Task<DntViewer>.Run(() => { return GetDntWindowFromStream(fs); })).Show(dockPanel1, DockState.Document);
         }
+
         DntViewer GetDntWindowFromStream(Stream stream)
         {
 
             DntViewer viewer = new DntViewer();
             viewer.LoadDNT(stream);
             return viewer;
-            //viewer.Show(dockPanel1, DockState.Document);
         }
      
         private void showLinqToolStripMenuItem_Click(object sender, EventArgs e)

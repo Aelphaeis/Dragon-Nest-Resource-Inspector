@@ -62,5 +62,10 @@ namespace DragonNest.ResourceInspection.Pak
                 return new MemoryStream(ZlibStream.UncompressBuffer(data));
             }
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

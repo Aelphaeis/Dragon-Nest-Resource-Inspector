@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.IO;
 using DragonNest.ResourceInspection.Pak;
 using DragonNest.ResourceInspector.Pak;
+using System.Diagnostics;
 
 using Guifreaks.NavigationBar;
 using WeifenLuo.WinFormsUI.Docking;
@@ -150,11 +151,26 @@ namespace DragonNest.ResourceInspection.Pak.Viewer
                         Nodes = Nodes.Find(v, false).First().Nodes;
                     
                     if (Nodes.Count == 0)
+                    {
+                        var value = pakFile.Files.First(p => p.Path == path);
+                        var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                        var appDataLocation = appData + value;
+                        using (var fs = new FileStream(appData + value, FileMode.Create, FileAccess.Write, FileShare.Delete | FileShare.ReadWrite))
+                        using(var hs = value.GetStream())
+                        {
+                            hs.CopyTo(fs);
+                            Process.Start(appDataLocation);
+                        }
                         return;
-
-                    Nodes[0].TreeView.SelectedNode = Nodes[0];
-                    PakTree_AfterSelect(PakTree, new TreeViewEventArgs(Nodes[0].Parent));
+                    }
+                    else
+                    {
+                        Nodes[0].TreeView.SelectedNode = Nodes[0];
+                        PakTree_AfterSelect(PakTree, new TreeViewEventArgs(Nodes[0].Parent));
+                    }
+                  
                 } 
+
         }
 
         private void listView1_MouseClick(object sender, MouseEventArgs e)

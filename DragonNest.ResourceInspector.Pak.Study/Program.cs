@@ -24,12 +24,9 @@ namespace DragonNest.ResourceInspection.Pak.Study
                     {
                         v.GetStream().CopyTo(fileStream);
                         fileStream.Close();
-                        
                     }
                 }
             }
-       
         }
-
     }
 }

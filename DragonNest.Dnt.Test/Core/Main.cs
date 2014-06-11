@@ -31,7 +31,6 @@ namespace DragonNest.ResourceInspection.Core
         public Main()
         {
             InitializeComponent();
-            statusStrip1.CanOverflow = true;
         }
 
         public Main(String [] args) : this()

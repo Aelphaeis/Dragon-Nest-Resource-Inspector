@@ -180,8 +180,26 @@ namespace DragonNest.ResourceInspection.Pak.Viewer
                 case MouseButtons.Right:
                     if(listView1.SelectedItems.Count == 0)
                         return;
+                    var Nodes = PakTree.Nodes;
+                    var path = toolStripTextBox1.Text + @"\" + listView1.SelectedItems[0].Text;
+                    path = path.Trim('\0');
+                    path = path;
+                    var pathComponents = path.Split(new char[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
+                    
+                    foreach(var v in pathComponents)
+                        Nodes = Nodes.Find(v, false).First().Nodes;
+
+                    if(listView1.SelectedItems[0].Text.EndsWith(".dnt"))
+                        contextMenuStrip1.Show(e.X, e.Y);
+                    
                     break;
             }
+        }
+
+        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
+        {
+
+
         }
 
      

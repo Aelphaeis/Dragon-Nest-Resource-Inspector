@@ -194,8 +194,6 @@ namespace DragonNest.ResourceInspector.Pak.Viewer
 
         private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
         {
-
-
         }
 
      

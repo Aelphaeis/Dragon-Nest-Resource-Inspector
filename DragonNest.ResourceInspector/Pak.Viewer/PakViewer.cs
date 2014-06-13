@@ -41,6 +41,25 @@ namespace DragonNest.ResourceInspector.Pak.Viewer
             InitializeComponent();
         }
 
+        void ExternOpen(FileHeader header)
+        {
+            var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            var appDataLocation = appData + @"\" + header;
+            using (var fs = new FileStream(appDataLocation, FileMode.Create, FileAccess.Write, FileShare.ReadWrite | FileShare.Delete))
+            using (var hs = header.GetStream())
+            {
+                hs.CopyTo(fs);
+                Process.Start(appDataLocation);
+            }
+        }
+
+        string GetPath(TreeNode n, bool slash = false)
+        {
+            if (n == null)
+                return String.Empty;
+            else
+                return GetPath(n.Parent, true) +  @"\" + n.Name;
+        }
      
         public void LoadPakStream(Stream stream) 
         {
@@ -57,7 +76,6 @@ namespace DragonNest.ResourceInspector.Pak.Viewer
             pakFile = new PakFile(pakStream = stream);
             RefreshPakTree();
         }
-
         void RefreshPakTree()
         {
             //To stop graphical inconsistency
@@ -79,15 +97,13 @@ namespace DragonNest.ResourceInspector.Pak.Viewer
                     {
                         TreeNode tn = new TreeNode(pathComponents[count]);
                         tn.Name = pathComponents[count];
-                        tn.ImageIndex = ((count == pathComponents.Length - 1) ? 2 : 0);
-                        tn.SelectedImageIndex = tn.ImageIndex;
+                        tn.ImageIndex = tn.SelectedImageIndex= ((count == pathComponents.Length - 1) ? 2 : 0);
                         Nodes.Add(tn);
                     }
                     var next = Nodes.Find(pathComponents[count], false).First();
                     Nodes = next.Nodes;
                 }
             }
-            
             //To update the Graphics
             PakTree.ResumeLayout();
         }
@@ -110,27 +126,15 @@ namespace DragonNest.ResourceInspector.Pak.Viewer
                     
                     foreach(var v in pathComponents)
                         Nodes = Nodes.Find(v, false).First().Nodes;
-                    
+
                     if (Nodes.Count == 0)
-                    {
-                        var value = pakFile.Files.First(p => p.Path == path);
-                        var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-                        var appDataLocation = appData + @"\" +  value;
-                        using (var fs = new FileStream(appDataLocation, FileMode.Create, FileAccess.Write, FileShare.ReadWrite | FileShare.Delete))
-                        using(var hs = value.GetStream())
-                        {
-                            hs.CopyTo(fs);
-                            Process.Start( appDataLocation);
-                        }
-                    }
+                        ExternOpen(pakFile.Files.First(p => p.Path == path));
                     else
                     {
                         Nodes[0].TreeView.SelectedNode = Nodes[0];
                         PakTree_AfterSelect(PakTree, new TreeViewEventArgs(Nodes[0].Parent));
                     }
-                  
                 } 
-
         }
 
         private void listView1_MouseClick(object sender, MouseEventArgs e)
@@ -138,11 +142,11 @@ namespace DragonNest.ResourceInspector.Pak.Viewer
             switch (e.Button)
             {
                 case MouseButtons.Right:
+                { 
                     if (listView1.SelectedItems.Count == 0)
                         return;
                     var Nodes = PakTree.Nodes;
                     var path = toolStripTextBox1.Text + @"\" + listView1.SelectedItems[0].Text;
-                    path = path.Trim('\0');
                     var pathComponents = path.Split(new char[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
 
                     foreach (var v in pathComponents)
@@ -152,8 +156,10 @@ namespace DragonNest.ResourceInspector.Pak.Viewer
                         contextMenuStrip1.Show(e.X, e.Y);
 
                     break;
+                }
             }
         }
+
         private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
         {
         }
@@ -221,6 +227,15 @@ namespace DragonNest.ResourceInspector.Pak.Viewer
                 Node = Node.Parent;
             }
             toolStripTextBox1.Text = path;
+        }
+
+        private void PakTree_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Node.Nodes.Count == 0)
+            {
+                var path = GetPath(e.Node);
+                ExternOpen(pakFile.Files.First(p => p.Path == path));
+            }
         }
         #endregion
     }

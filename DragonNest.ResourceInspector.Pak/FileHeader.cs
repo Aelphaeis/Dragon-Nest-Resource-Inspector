@@ -22,7 +22,13 @@ namespace DragonNest.ResourceInspector.Pak
         public static FileHeader FromBinaryReader(BinaryReader reader)
         {
             FileHeader header = new FileHeader();
-            header.Path = Encoding.ASCII.GetString(reader.ReadBytes(0x100));
+
+            var t = String.Empty;
+            header.Path =  Encoding.ASCII.GetString(reader.ReadBytes(0x100));
+            
+            header.Path =  t = header.Path.Trim('\0');
+            header.Path = header.Path.Split('\0').First();
+           
             header.SizeDummy = reader.ReadUInt32();
             header.OriginalSize = reader.ReadUInt32();
             header.CompressedSize = reader.ReadUInt32();

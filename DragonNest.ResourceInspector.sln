@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonNest.ResourceInspector.Dnt", "DragonNest.Dnt\DragonNest.ResourceInspector.Dnt.csproj", "{B9EE50C4-82C8-4B19-99F7-39CB7B00CF08}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonNest.ResourceInspector", "DragonNest.Dnt.Test\DragonNest.ResourceInspector.csproj", "{62DAEDF3-D285-43DF-9785-063C12CD59FD}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonNest.ResourceInspector.Pak", "DragonNest.ResourceInspector.Pak\DragonNest.ResourceInspector.Pak.csproj", "{5B884AE2-931C-4E35-86B7-3CEAF63B1D78}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonNest.ResourceInspector.Pak.Tests", "DragonNest.ResourceInspector.Pak.Tests\DragonNest.ResourceInspector.Pak.Tests.csproj", "{CBE660A7-C828-4376-808D-C785B29BB135}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonNest.ResourceInspector.Pak.Study", "DragonNest.ResourceInspector.Pak.Study\DragonNest.ResourceInspector.Pak.Study.csproj", "{60427EA6-EF77-48EE-98D8-FB9A5EA19488}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonNest.ResourceInspector.Dnt", "DragonNest.ResourceInspector.Dnt\DragonNest.ResourceInspector.Dnt.csproj", "{B9EE50C4-82C8-4B19-99F7-39CB7B00CF08}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonNest.ResourceInspector", "DragonNest.ResourceInspector\DragonNest.ResourceInspector.csproj", "{62DAEDF3-D285-43DF-9785-063C12CD59FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B9EE50C4-82C8-4B19-99F7-39CB7B00CF08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B9EE50C4-82C8-4B19-99F7-39CB7B00CF08}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B9EE50C4-82C8-4B19-99F7-39CB7B00CF08}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B9EE50C4-82C8-4B19-99F7-39CB7B00CF08}.Release|Any CPU.Build.0 = Release|Any CPU
-		{62DAEDF3-D285-43DF-9785-063C12CD59FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{62DAEDF3-D285-43DF-9785-063C12CD59FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{62DAEDF3-D285-43DF-9785-063C12CD59FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{62DAEDF3-D285-43DF-9785-063C12CD59FD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5B884AE2-931C-4E35-86B7-3CEAF63B1D78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5B884AE2-931C-4E35-86B7-3CEAF63B1D78}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B884AE2-931C-4E35-86B7-3CEAF63B1D78}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +31,14 @@ Global
 		{60427EA6-EF77-48EE-98D8-FB9A5EA19488}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60427EA6-EF77-48EE-98D8-FB9A5EA19488}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60427EA6-EF77-48EE-98D8-FB9A5EA19488}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9EE50C4-82C8-4B19-99F7-39CB7B00CF08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9EE50C4-82C8-4B19-99F7-39CB7B00CF08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9EE50C4-82C8-4B19-99F7-39CB7B00CF08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9EE50C4-82C8-4B19-99F7-39CB7B00CF08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62DAEDF3-D285-43DF-9785-063C12CD59FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62DAEDF3-D285-43DF-9785-063C12CD59FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62DAEDF3-D285-43DF-9785-063C12CD59FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62DAEDF3-D285-43DF-9785-063C12CD59FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -100,7 +100,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DragonNest.Dnt\DragonNest.ResourceInspector.Dnt.csproj">
+    <ProjectReference Include="..\DragonNest.ResourceInspector.Dnt\DragonNest.ResourceInspector.Dnt.csproj">
       <Project>{b9ee50c4-82c8-4b19-99f7-39cb7b00cf08}</Project>
       <Name>DragonNest.ResourceInspector.Dnt</Name>
     </ProjectReference>

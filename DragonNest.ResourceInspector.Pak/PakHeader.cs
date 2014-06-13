@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonNest.ResourceInspection.Pak
+namespace DragonNest.ResourceInspector.Pak
 {
     //struct PakHeader
     //{

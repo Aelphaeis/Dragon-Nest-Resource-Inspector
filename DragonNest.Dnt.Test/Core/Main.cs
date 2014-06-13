@@ -12,11 +12,11 @@ using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.IO.Pipes;
 using WeifenLuo.WinFormsUI.Docking;
-using DragonNest.ResourceInspection.Dnt.Viewer;
-using DragonNest.ResourceInspection.Pak.Viewer;
+using DragonNest.ResourceInspector.Dnt.Viewer;
+using DragonNest.ResourceInspector.Pak.Viewer;
 using System.ServiceModel;
 
-namespace DragonNest.ResourceInspection.Core
+namespace DragonNest.ResourceInspector.Core
 {
     using Timer = System.Timers.Timer;
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]

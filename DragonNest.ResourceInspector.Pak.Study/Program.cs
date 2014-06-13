@@ -7,7 +7,7 @@ using System.IO;
 using DragonNest.ResourceInspector.Pak;
 using Ionic.Zlib;
 
-namespace DragonNest.ResourceInspection.Pak.Study
+namespace DragonNest.ResourceInspector.Pak.Study
 {
     class Program
     {

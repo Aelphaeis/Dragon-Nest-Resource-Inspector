@@ -7,7 +7,7 @@
     <ProjectGuid>{B9EE50C4-82C8-4B19-99F7-39CB7B00CF08}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DragonNest.ResourceInspection.Dnt</RootNamespace>
+    <RootNamespace>DragonNest.ResourceInspector.Dnt</RootNamespace>
     <AssemblyName>Dnt</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

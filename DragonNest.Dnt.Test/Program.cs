@@ -7,9 +7,9 @@ using System.Data;
 using System.Windows.Forms;
 using System.IO.Pipes;
 using System.Threading;
-using DragonNest.ResourceInspection.Core;
+using DragonNest.ResourceInspector.Core;
 
-namespace DragonNest.ResourceInspection
+namespace DragonNest.ResourceInspector
 {
     class Program
     {

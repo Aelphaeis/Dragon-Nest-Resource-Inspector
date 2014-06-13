@@ -8,13 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using DragonNest.ResourceInspection.Pak;
 using DragonNest.ResourceInspector.Pak;
 using System.Diagnostics;
 
 using Guifreaks.NavigationBar;
 using WeifenLuo.WinFormsUI.Docking;
-namespace DragonNest.ResourceInspection.Pak.Viewer
+namespace DragonNest.ResourceInspector.Pak.Viewer
 {
     public partial class AmalgamatedPakViewer : DockContent
     {

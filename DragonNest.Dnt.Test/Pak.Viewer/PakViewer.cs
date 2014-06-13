@@ -8,17 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using DragonNest.ResourceInspection.Pak;
 using DragonNest.ResourceInspector.Pak;
 using System.Diagnostics;
-
 using Guifreaks.NavigationBar;
 using WeifenLuo.WinFormsUI.Docking;
-namespace DragonNest.ResourceInspection.Pak.Viewer
+
+namespace DragonNest.ResourceInspector.Pak.Viewer
 {
     public partial class PakViewer : DockContent
     {
-
         public event EventHandler StatusChanged; 
         public int Status
         {
@@ -155,13 +153,13 @@ namespace DragonNest.ResourceInspection.Pak.Viewer
                         var value = pakFile.Files.First(p => p.Path == path);
                         var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
                         var appDataLocation = appData + @"\" +  value;
-                        using (var fs = new FileStream(appDataLocation, FileMode.Create, FileAccess.Write, FileShare.Delete | FileShare.ReadWrite))
+                        using (var fs = new FileStream(appDataLocation, FileMode.Create, FileAccess.Write, FileShare.ReadWrite | FileShare.Delete | FileShare.Inheritable ,516))
                         using(var hs = value.GetStream())
                         {
                             hs.CopyTo(fs);
-                            Process.Start(appDataLocation);
+                            string cmd = "cmd.exe /c ";
+                            Process.Start(cmd + appDataLocation).WaitForExit();
                         }
-                        return;
                     }
                     else
                     {

@@ -11,7 +11,7 @@ using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 using Guifreaks.NavigationBar;
 
-namespace DragonNest.ResourceInspection.Dnt.Viewer
+namespace DragonNest.ResourceInspector.Dnt.Viewer
 {
     public partial class DntViewer : DockContent
     {

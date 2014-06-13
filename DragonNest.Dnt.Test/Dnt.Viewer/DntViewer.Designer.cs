@@ -1,4 +1,4 @@
-﻿namespace DragonNest.ResourceInspection.Dnt.Viewer
+﻿namespace DragonNest.ResourceInspector.Dnt.Viewer
 {
     partial class DntViewer
     {

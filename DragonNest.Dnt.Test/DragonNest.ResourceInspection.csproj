@@ -7,7 +7,7 @@
     <ProjectGuid>{62DAEDF3-D285-43DF-9785-063C12CD59FD}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DragonNest.ResourceInspection</RootNamespace>
+    <RootNamespace>DragonNest.ResourceInspector</RootNamespace>
     <AssemblyName>Dragon Nest NA Resource Inspector</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

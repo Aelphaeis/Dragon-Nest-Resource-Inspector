@@ -1,4 +1,4 @@
-﻿namespace DragonNest.ResourceInspection.Pak.Viewer
+﻿namespace DragonNest.ResourceInspector.Pak.Viewer
 {
     partial class AmalgamatedPakViewer
     {

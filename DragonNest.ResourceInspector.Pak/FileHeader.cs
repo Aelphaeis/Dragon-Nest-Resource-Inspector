@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using Ionic.Zlib;
-namespace DragonNest.ResourceInspection.Pak
+namespace DragonNest.ResourceInspector.Pak
 {
     //struct FileHeader
     //{

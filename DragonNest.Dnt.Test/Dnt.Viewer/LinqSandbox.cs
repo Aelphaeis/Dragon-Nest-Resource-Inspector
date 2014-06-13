@@ -8,7 +8,7 @@ using System.Reflection;
 using Microsoft.CSharp;
 using System.CodeDom.Compiler;
 
-namespace DragonNest.ResourceInspection.Dnt.Viewer
+namespace DragonNest.ResourceInspector.Dnt.Viewer
 {
     public class LinqSandbox
     {

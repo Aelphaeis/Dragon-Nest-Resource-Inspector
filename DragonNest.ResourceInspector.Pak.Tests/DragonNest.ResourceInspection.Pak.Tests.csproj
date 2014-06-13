@@ -6,7 +6,7 @@
     <ProjectGuid>{CBE660A7-C828-4376-808D-C785B29BB135}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DragonNest.ResourceInspection.Pak.Tests</RootNamespace>
+    <RootNamespace>DragonNest.ResourceInspector.Pak.Tests</RootNamespace>
     <AssemblyName>DragonNest.ResourceInspector.Pak.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

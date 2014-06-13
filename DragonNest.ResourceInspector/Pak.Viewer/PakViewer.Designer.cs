@@ -115,7 +115,7 @@
             // PakTree
             // 
             this.PakTree.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PakTree.ImageIndex = 0;
+            this.PakTree.ImageIndex = 2;
             this.PakTree.ImageList = this.imageList1;
             this.PakTree.Location = new System.Drawing.Point(0, 0);
             this.PakTree.Name = "PakTree";
@@ -247,6 +247,7 @@
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             this.imageList1.Images.SetKeyName(0, "Icontexto-Elite-Folders-Close-Folder.ico");
             this.imageList1.Images.SetKeyName(1, "Icontexto-Elite-Folders-Open-Folder.ico");
+            this.imageList1.Images.SetKeyName(2, "defult-text.ico");
             // 
             // PakViewer
             // 

@@ -68,7 +68,7 @@ namespace DragonNest.ResourceInspector.Pak.Viewer
             PakTree.SuspendLayout();
             PakTree.Nodes.Clear();
 
-            for (int i = 0; i < pakFile.Header.FileCount; i++ )
+            for (int i = 0; i < pakFile.Header.FileCount; i++)
             {
                 var file = pakFile.Files[i];
 
@@ -76,14 +76,22 @@ namespace DragonNest.ResourceInspector.Pak.Viewer
 
                 var pathComponents = file.Path.Split(new char[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
                 var Nodes = PakTree.Nodes;
-                foreach (var v in pathComponents)
+
+                for (int count = 0; count < pathComponents.Length; count++)
                 {
-                    if (!Nodes.ContainsKey(v))
-                        Nodes.Add(new TreeNode(v) { Name = v });
-                    var next = Nodes.Find(v, false).First();
+                    if (!Nodes.ContainsKey(pathComponents[count]))
+                    {
+                        TreeNode tn = new TreeNode(pathComponents[count]);
+                        tn.Name = pathComponents[count];
+                        tn.ImageIndex = ((count == pathComponents.Length - 1) ? 2 : 0);
+                        tn.SelectedImageIndex = tn.ImageIndex;
+                        Nodes.Add(tn);
+                    }
+                    var next = Nodes.Find(pathComponents[count], false).First();
                     Nodes = next.Nodes;
                 }
             }
+            
             //To update the Graphics
             PakTree.ResumeLayout();
         }
@@ -123,9 +131,8 @@ namespace DragonNest.ResourceInspector.Pak.Viewer
             {
                 ListViewItem item = new ListViewItem(node.Name);
                 listView1.Items.Add(item);
-
             }
-
+            
             var path = String.Empty;
             var Node = e.Node;
             for (int i = 0; i <= e.Node.Level; i++, path = path.Insert(0,@"\"))
@@ -198,12 +205,20 @@ namespace DragonNest.ResourceInspector.Pak.Viewer
 
         private void PakTree_BeforeExpand(object sender, TreeViewCancelEventArgs e)
         {
-            e.Node.ImageIndex = 1;
+            if (e.Node.Nodes.Count != 0)
+            {
+                e.Node.ImageIndex = 1;
+                e.Node.SelectedImageIndex = e.Node.ImageIndex;
+            }
         }
 
         private void PakTree_BeforeCollapse(object sender, TreeViewCancelEventArgs e)
         {
-            e.Node.ImageIndex = 0;
+            if(e.Node.Nodes.Count != 0)
+            { 
+                e.Node.ImageIndex = 0;
+                e.Node.SelectedImageIndex = e.Node.ImageIndex;
+            }
         }
 
      

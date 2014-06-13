@@ -196,6 +196,16 @@ namespace DragonNest.ResourceInspector.Pak.Viewer
         {
         }
 
+        private void PakTree_BeforeExpand(object sender, TreeViewCancelEventArgs e)
+        {
+            e.Node.ImageIndex = 1;
+        }
+
+        private void PakTree_BeforeCollapse(object sender, TreeViewCancelEventArgs e)
+        {
+            e.Node.ImageIndex = 0;
+        }
+
      
     }
 }

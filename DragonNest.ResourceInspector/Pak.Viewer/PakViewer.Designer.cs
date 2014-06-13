@@ -29,16 +29,17 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PakViewer));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.naviBar1 = new Guifreaks.NavigationBar.NaviBar(this.components);
             this.naviBand1 = new Guifreaks.NavigationBar.NaviBand(this.components);
             this.PakTree = new System.Windows.Forms.TreeView();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.listView1 = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.openInInspectorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.BottomToolStripPanel = new System.Windows.Forms.ToolStripPanel();
@@ -48,6 +49,7 @@
             this.ContentPanel = new System.Windows.Forms.ToolStripContentPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -113,11 +115,31 @@
             // PakTree
             // 
             this.PakTree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PakTree.ImageIndex = 0;
+            this.PakTree.ImageList = this.imageList1;
             this.PakTree.Location = new System.Drawing.Point(0, 0);
             this.PakTree.Name = "PakTree";
+            this.PakTree.SelectedImageIndex = 0;
             this.PakTree.Size = new System.Drawing.Size(161, 676);
             this.PakTree.TabIndex = 0;
+            this.PakTree.BeforeCollapse += new System.Windows.Forms.TreeViewCancelEventHandler(this.PakTree_BeforeCollapse);
+            this.PakTree.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.PakTree_BeforeExpand);
             this.PakTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.PakTree_AfterSelect);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 721);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(1258, 22);
+            this.statusStrip1.TabIndex = 6;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
             // 
             // listView1
             // 
@@ -150,21 +172,6 @@
             // 
             this.columnHeader3.Text = "Compressed Size";
             this.columnHeader3.Width = 121;
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 721);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1258, 22);
-            this.statusStrip1.TabIndex = 6;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
             // 
             // contextMenuStrip1
             // 
@@ -234,6 +241,13 @@
             this.toolStripTextBox1.Name = "toolStripTextBox1";
             this.toolStripTextBox1.Size = new System.Drawing.Size(100, 25);
             // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "Icontexto-Elite-Folders-Close-Folder.ico");
+            this.imageList1.Images.SetKeyName(1, "Icontexto-Elite-Folders-Open-Folder.ico");
+            // 
             // PakViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -286,5 +300,6 @@
         private System.Windows.Forms.ToolStripContentPanel ContentPanel;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox1;
+        private System.Windows.Forms.ImageList imageList1;
     }
 }

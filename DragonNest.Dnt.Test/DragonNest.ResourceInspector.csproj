@@ -100,13 +100,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DragonNest.Dnt\DragonNest.ResourceInspection.Dnt.csproj">
+    <ProjectReference Include="..\DragonNest.Dnt\DragonNest.ResourceInspector.Dnt.csproj">
       <Project>{b9ee50c4-82c8-4b19-99f7-39cb7b00cf08}</Project>
-      <Name>DragonNest.ResourceInspection.Dnt</Name>
+      <Name>DragonNest.ResourceInspector.Dnt</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DragonNest.ResourceInspector.Pak\DragonNest.ResourceInspection.Pak.csproj">
+    <ProjectReference Include="..\DragonNest.ResourceInspector.Pak\DragonNest.ResourceInspector.Pak.csproj">
       <Project>{5b884ae2-931c-4e35-86b7-3ceaf63b1d78}</Project>
-      <Name>DragonNest.ResourceInspection.Pak</Name>
+      <Name>DragonNest.ResourceInspector.Pak</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

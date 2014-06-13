@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonNest.ResourceInspection.Dnt", "DragonNest.Dnt\DragonNest.ResourceInspection.Dnt.csproj", "{B9EE50C4-82C8-4B19-99F7-39CB7B00CF08}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonNest.ResourceInspector.Dnt", "DragonNest.Dnt\DragonNest.ResourceInspector.Dnt.csproj", "{B9EE50C4-82C8-4B19-99F7-39CB7B00CF08}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonNest.ResourceInspection", "DragonNest.Dnt.Test\DragonNest.ResourceInspection.csproj", "{62DAEDF3-D285-43DF-9785-063C12CD59FD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonNest.ResourceInspector", "DragonNest.Dnt.Test\DragonNest.ResourceInspector.csproj", "{62DAEDF3-D285-43DF-9785-063C12CD59FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonNest.ResourceInspection.Pak", "DragonNest.ResourceInspector.Pak\DragonNest.ResourceInspection.Pak.csproj", "{5B884AE2-931C-4E35-86B7-3CEAF63B1D78}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonNest.ResourceInspector.Pak", "DragonNest.ResourceInspector.Pak\DragonNest.ResourceInspector.Pak.csproj", "{5B884AE2-931C-4E35-86B7-3CEAF63B1D78}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonNest.ResourceInspection.Pak.Tests", "DragonNest.ResourceInspector.Pak.Tests\DragonNest.ResourceInspection.Pak.Tests.csproj", "{CBE660A7-C828-4376-808D-C785B29BB135}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonNest.ResourceInspector.Pak.Tests", "DragonNest.ResourceInspector.Pak.Tests\DragonNest.ResourceInspector.Pak.Tests.csproj", "{CBE660A7-C828-4376-808D-C785B29BB135}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonNest.ResourceInspection.Pak.Study", "DragonNest.ResourceInspector.Pak.Study\DragonNest.ResourceInspection.Pak.Study.csproj", "{60427EA6-EF77-48EE-98D8-FB9A5EA19488}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonNest.ResourceInspector.Pak.Study", "DragonNest.ResourceInspector.Pak.Study\DragonNest.ResourceInspector.Pak.Study.csproj", "{60427EA6-EF77-48EE-98D8-FB9A5EA19488}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

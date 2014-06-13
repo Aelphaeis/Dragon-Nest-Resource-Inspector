@@ -16,7 +16,7 @@ using Guifreaks.NavigationBar;
 using WeifenLuo.WinFormsUI.Docking;
 namespace DragonNest.ResourceInspection.Pak.Viewer
 {
-    public partial class PakViewer : DockContent
+    public partial class AmalgamatedPakViewer : DockContent
     {
 
         public event EventHandler StatusChanged; 
@@ -38,7 +38,7 @@ namespace DragonNest.ResourceInspection.Pak.Viewer
 
         Stream pakStream;
         PakFile pakFile;
-        public PakViewer()
+        public AmalgamatedPakViewer()
         {
             InitializeComponent();
         }

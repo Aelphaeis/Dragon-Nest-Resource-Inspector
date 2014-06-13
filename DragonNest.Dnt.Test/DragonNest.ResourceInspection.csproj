@@ -79,6 +79,12 @@
     <Compile Include="Core\Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
+    <Compile Include="Pak.Viewer\AmalgamatedPakViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Pak.Viewer\AmalgamatedPakViewer.Designer.cs">
+      <DependentUpon>AmalgamatedPakViewer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Pak.Viewer\PakViewer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -109,6 +115,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Core\Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pak.Viewer\AmalgamatedPakViewer.resx">
+      <DependentUpon>AmalgamatedPakViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Pak.Viewer\PakViewer.resx">
       <DependentUpon>PakViewer.cs</DependentUpon>

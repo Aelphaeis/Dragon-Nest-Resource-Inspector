@@ -153,12 +153,11 @@ namespace DragonNest.ResourceInspector.Pak.Viewer
                         var value = pakFile.Files.First(p => p.Path == path);
                         var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
                         var appDataLocation = appData + @"\" +  value;
-                        using (var fs = new FileStream(appDataLocation, FileMode.Create, FileAccess.Write, FileShare.ReadWrite | FileShare.Delete | FileShare.Inheritable ,516))
+                        using (var fs = new FileStream(appDataLocation, FileMode.Create, FileAccess.Write, FileShare.ReadWrite | FileShare.Delete))
                         using(var hs = value.GetStream())
                         {
                             hs.CopyTo(fs);
-                            string cmd = "cmd.exe /c ";
-                            Process.Start(cmd + appDataLocation).WaitForExit();
+                            Process.Start( appDataLocation);
                         }
                     }
                     else

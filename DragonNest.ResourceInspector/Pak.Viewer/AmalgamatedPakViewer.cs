@@ -17,50 +17,27 @@ namespace DragonNest.ResourceInspector.Pak.Viewer
 {
     public partial class AmalgamatedPakViewer : DockContent
     {
-
-        public event EventHandler StatusChanged; 
-        public int Status
-        {
-            get
-            {
-                return status;
-            }
-            set
-            {
-                status = value;
-                if (StatusChanged != null)
-                    StatusChanged(this, EventArgs.Empty); 
-            }
-        }
-        int status;
-
-
-        Stream pakStream;
-        PakFile pakFile;
+        Dictionary<String, FileHeader> files;
         public AmalgamatedPakViewer()
         {
             InitializeComponent();
         }
 
-        private void PakViewer_Load(object sender, EventArgs e)
+        public AmalgamatedPakViewer LoadPaks(IEnumerable<Stream> streams, AmalgationMode Mode)
         {
-            toolStripTextBox1.Width = toolStrip1.Size.Width - 4;
-            toolStrip1.SizeChanged += (s, a) => toolStripTextBox1.Width = toolStrip1.Size.Width - 4;
-        }
-        public void LoadPakStream(Stream stream) 
-        {
-            Status = 0;
-            if (pakStream != null)  
-                pakStream.Close();
+            files = new Dictionary<string, FileHeader>();
 
-            Status = 5;
+            var paks = new List<PakFile>();
+            Parallel.ForEach(streams, (s) => paks.Add(new PakFile(s)));
+            foreach (PakFile p in paks.OrderBy(p => p.Name))
+                foreach(FileHeader f in p.Files)
+                    if(files.ContainsKey(f.Path))
+                        files[f.Path] = f;
+                    else
+                        files.Add(f.Path, f);
 
-            if (stream is FileStream) { 
-                Text = ((FileStream)stream).Name.Split('\\').Last();
-                toolStripStatusLabel1.Text = ((FileStream)stream).Name;
-            }
-            pakFile = new PakFile(pakStream = stream);
             RefreshPakTree();
+            return this;
         }
 
         void RefreshPakTree()
@@ -69,19 +46,21 @@ namespace DragonNest.ResourceInspector.Pak.Viewer
             PakTree.SuspendLayout();
             PakTree.Nodes.Clear();
 
-            for (int i = 0; i < pakFile.Header.FileCount; i++ )
+            foreach (var file in files.Values)
             {
-                var file = pakFile.Files[i];
-
-                Status = Convert.ToInt32(Decimal.Divide(i, pakFile.Header.FileCount) * 95 + 5);
-
                 var pathComponents = file.Path.Split(new char[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
                 var Nodes = PakTree.Nodes;
-                foreach (var v in pathComponents)
+
+                for (int count = 0; count < pathComponents.Length; count++)
                 {
-                    if (!Nodes.ContainsKey(v))
-                        Nodes.Add(new TreeNode(v) { Name = v });
-                    var next = Nodes.Find(v, false).First();
+                    if (!Nodes.ContainsKey(pathComponents[count]))
+                    {
+                        TreeNode tn = new TreeNode(pathComponents[count]);
+                        tn.Name = pathComponents[count];
+                        tn.ImageIndex = tn.SelectedImageIndex = ((count == pathComponents.Length - 1) ? 2 : 0);
+                        Nodes.Add(tn);
+                    }
+                    var next = Nodes.Find(pathComponents[count], false).First();
                     Nodes = next.Nodes;
                 }
             }
@@ -89,6 +68,12 @@ namespace DragonNest.ResourceInspector.Pak.Viewer
             PakTree.ResumeLayout();
         }
 
+
+        public AmalgamatedPakViewer LoadPaks(IEnumerable<Stream> streams)
+        {
+            return LoadPaks(streams, AmalgationMode.Ordinal);
+        }
+  
         private void naviBar1_Resize(object sender, EventArgs e)
         {
             var obj = ((NaviBar)sender);
@@ -103,16 +88,59 @@ namespace DragonNest.ResourceInspector.Pak.Viewer
                 splitContainer1.SplitterDistance = obj.Size.Width;
             }
         }
-        private void splitContainer1_SplitterMoving(object sender, SplitterCancelEventArgs e)
+
+        private void PakViewer_Load(object sender, EventArgs e)
         {
-            naviBar1.Width = splitContainer1.SplitterDistance;
+            toolStripTextBox1.Width = toolStrip1.Size.Width - 4;
+            toolStrip1.SizeChanged += (s, a) => toolStripTextBox1.Width = toolStrip1.Size.Width - 4;
+        }
+        private void listView1_DoubleClick(object sender, EventArgs e)
+        {
+            if (sender == listView1)
+                if (listView1.SelectedItems.Count == 1)
+                {
+                    var Nodes = PakTree.Nodes;
+                    var path = toolStripTextBox1.Text + @"\" + listView1.SelectedItems[0].Text;
+                    var pathComponents = path.Split(new char[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    foreach (var v in pathComponents)
+                        Nodes = Nodes.Find(v, false).First().Nodes;
+
+                    
+                    if (Nodes.Count == 0)
+                        ExternOpen(files.Values.First(p => p.Path == path));
+                    else
+                    {
+                        Nodes[0].TreeView.SelectedNode = Nodes[0];
+                        PakTree_AfterSelect(PakTree, new TreeViewEventArgs(Nodes[0].Parent));
+                    }
+                }
         }
 
-        private void PakViewer_FormClosing(object sender, FormClosingEventArgs e)
+        private void listView1_MouseClick(object sender, MouseEventArgs e)
         {
-            if (pakStream != null)
-                pakStream.Close();
+
         }
+
+
+        private void PakTree_BeforeExpand(object sender, TreeViewCancelEventArgs e)
+        {
+            if (e.Node.Nodes.Count != 0)
+            {
+                e.Node.ImageIndex = 1;
+                e.Node.SelectedImageIndex = e.Node.ImageIndex;
+            }
+        }
+
+        private void PakTree_BeforeCollapse(object sender, TreeViewCancelEventArgs e)
+        {
+            if (e.Node.Nodes.Count != 0)
+            {
+                e.Node.ImageIndex = 0;
+                e.Node.SelectedImageIndex = e.Node.ImageIndex;
+            }
+        }
+
 
         private void PakTree_AfterSelect(object sender, TreeViewEventArgs e)
         {
@@ -124,82 +152,27 @@ namespace DragonNest.ResourceInspector.Pak.Viewer
             {
                 ListViewItem item = new ListViewItem(node.Name);
                 listView1.Items.Add(item);
-
             }
 
             var path = String.Empty;
             var Node = e.Node;
-            for (int i = 0; i <= e.Node.Level; i++, path = path.Insert(0,@"\"))
+            for (int i = 0; i <= e.Node.Level; i++, path = path.Insert(0, @"\"))
             {
                 path = path.Insert(0, Node.Text);
                 Node = Node.Parent;
             }
             toolStripTextBox1.Text = path;
         }
-
-        private void listView1_DoubleClick(object sender, EventArgs e)
+        void ExternOpen(FileHeader header)
         {
-            if (sender == listView1)
-                if (listView1.SelectedItems.Count == 1)
-                {
-                    var Nodes = PakTree.Nodes;
-                    var path = toolStripTextBox1.Text + @"\" + listView1.SelectedItems[0].Text;
-                    var pathComponents = path.Split(new char[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
-                    
-                    foreach(var v in pathComponents)
-                        Nodes = Nodes.Find(v, false).First().Nodes;
-                    
-                    if (Nodes.Count == 0)
-                    {
-                        var value = pakFile.Files.First(p => p.Path == path);
-                        var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-                        var appDataLocation = appData + value;
-                        using (var fs = new FileStream(appData + value, FileMode.Create, FileAccess.Write, FileShare.Delete | FileShare.ReadWrite))
-                        using(var hs = value.GetStream())
-                        {
-                            hs.CopyTo(fs);
-                            Process.Start(appDataLocation);
-                        }
-                        return;
-                    }
-                    else
-                    {
-                        Nodes[0].TreeView.SelectedNode = Nodes[0];
-                        PakTree_AfterSelect(PakTree, new TreeViewEventArgs(Nodes[0].Parent));
-                    }
-                  
-                } 
-
-        }
-
-        private void listView1_MouseClick(object sender, MouseEventArgs e)
-        {
-            switch(e.Button)
+            var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            var appDataLocation = appData + @"\" + header;
+            using (var fs = new FileStream(appDataLocation, FileMode.Create, FileAccess.Write, FileShare.ReadWrite | FileShare.Delete))
+            using (var hs = header.GetStream())
             {
-                case MouseButtons.Right:
-                    if(listView1.SelectedItems.Count == 0)
-                        return;
-                    var Nodes = PakTree.Nodes;
-                    var path = toolStripTextBox1.Text + @"\" + listView1.SelectedItems[0].Text;
-                    path = path.Trim('\0');
-                    var pathComponents = path.Split(new char[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
-                    
-                    foreach(var v in pathComponents)
-                        Nodes = Nodes.Find(v, false).First().Nodes;
-
-                    if(listView1.SelectedItems[0].Text.EndsWith(".dnt"))
-                        contextMenuStrip1.Show(e.X, e.Y);
-                    
-                    break;
+                hs.CopyTo(fs);
+                Process.Start(appDataLocation);
             }
         }
-
-        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
-        {
-
-
-        }
-
-     
     }
 }

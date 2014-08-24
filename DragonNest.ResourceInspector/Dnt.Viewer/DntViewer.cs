@@ -27,7 +27,7 @@ namespace DragonNest.ResourceInspector.Dnt.Viewer
             }
             set{
                 status = value;
-                if(StatusChanged!=null)
+                if(StatusChanged != null)
                     StatusChanged(this, EventArgs.Empty);
             }
         }
@@ -204,7 +204,5 @@ namespace DragonNest.ResourceInspector.Dnt.Viewer
                 MessageBox.Show(x.Message);
             }
         }
-
-
     }
 }

@@ -15,6 +15,7 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace DragonNest.ResourceInspector.Pak.Viewer
 {
+    //todo implement Idisposable pattern correctly
     public partial class PakViewer : DockContent
     {
         public event EventHandler StatusChanged; 
@@ -33,7 +34,6 @@ namespace DragonNest.ResourceInspector.Pak.Viewer
         }
         int status;
 
-
         Stream pakStream;
         PakFile pakFile;
         public PakViewer()
@@ -49,7 +49,8 @@ namespace DragonNest.ResourceInspector.Pak.Viewer
             using (var hs = header.GetStream())
             {
                 hs.CopyTo(fs);
-                Process.Start(appDataLocation);
+                Process.Start("cmd " + appDataLocation);
+                //warning : will throw exception if app specified to open time cnanot be found or no app is specified.
             }
         }
 
@@ -76,6 +77,7 @@ namespace DragonNest.ResourceInspector.Pak.Viewer
             pakFile = new PakFile(pakStream = stream);
             RefreshPakTree();
         }
+
         void RefreshPakTree()
         {
             //To stop graphical inconsistency
@@ -160,9 +162,6 @@ namespace DragonNest.ResourceInspector.Pak.Viewer
             }
         }
 
-        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
-        {
-        }
 
         private void PakTree_BeforeExpand(object sender, TreeViewCancelEventArgs e)
         {

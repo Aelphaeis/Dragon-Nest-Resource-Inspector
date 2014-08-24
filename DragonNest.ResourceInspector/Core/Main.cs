@@ -15,7 +15,7 @@ using WeifenLuo.WinFormsUI.Docking;
 using DragonNest.ResourceInspector.Dnt.Viewer;
 using DragonNest.ResourceInspector.Pak.Viewer;
 using System.ServiceModel;
-
+//using DragonNest.ResourceInspector.Core.Explorer;
 namespace DragonNest.ResourceInspector.Core
 {
     using Timer = System.Timers.Timer;
@@ -31,7 +31,14 @@ namespace DragonNest.ResourceInspector.Core
         public Main()
         {
             InitializeComponent();
+
+            //Do event handlers here to reduce code clutter later. 
+            exitToolStripMenuItem.Click += (s, e) => Close();
+            dragonNestTableToolStripMenuItem.Click += (s, e) => OpenDnt();
+            singleFileToolStripMenuItem.Click += (s, e) => OpenPakSingle();
+            amalgamationToolStripMenuItem.Click += (s, e) => OpenPakAmalgation();
         }
+
 
         public Main(String [] args) : this()
         {
@@ -71,7 +78,31 @@ namespace DragonNest.ResourceInspector.Core
                 }
             }
         }
+        #region Pubilc methods
+        public void OpenDnt()
+        {
+            var ofd = new OpenFileDialog() { Filter = "DNT | *.dnt" };
+            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                OpenDnt(ofd.OpenFile());
+        }
 
+        public void OpenPakSingle()
+        {
+            var ofd = new OpenFileDialog() { Filter = "PAK | *.pak" };
+            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                OpenPak(ofd.OpenFile());
+        }
+
+        public void OpenPakAmalgation()
+        {
+            var ofd = new OpenFileDialog() { Filter = "PAK | *.pak" };
+            ofd.Multiselect = true;
+
+            AmalgamatedPakViewer apv = new AmalgamatedPakViewer();
+            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                apv.LoadPaks(ofd.FileNames.Select(p => File.Open(p, FileMode.Open, FileAccess.Read,FileShare.ReadWrite))).Show(dockPanel1, DockState.Document);
+        }
+        #endregion
         #region Service Implementations
         public void OpenDnt(string path)
         {
@@ -110,30 +141,14 @@ namespace DragonNest.ResourceInspector.Core
             DntViewer.ShowLinq = !showLinqToolStripMenuItem.Checked;
             showLinqToolStripMenuItem.Checked = DntViewer.ShowLinq;
         }
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
+
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (@this != null)
-            {
                 @this.Close();
-            }
-        }
-        private void dntToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var ofd = new OpenFileDialog() { Filter = "DNT | *.dnt" };
-            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                OpenDnt(ofd.OpenFile());
         }
 
-        private void pakToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var ofd = new OpenFileDialog() { Filter = "PAK | *.pak" };
-            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                OpenPak(ofd.OpenFile());
-        }
+
         private void PakOpenerWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             //Maybe someday someone else will call this background worker.
@@ -152,7 +167,7 @@ namespace DragonNest.ResourceInspector.Core
             viewer.LoadPakStream(stream);
             Invoke(new Action(() =>
             {
-                viewer.Show(dockPanel1,DockState.Document);
+                viewer.Show(dockPanel1, DockState.Document);
                 statusStrip1.Items.Remove(bar);
                 statusStrip1.Items.Remove(label);
                 stream.Dispose();
@@ -182,8 +197,12 @@ namespace DragonNest.ResourceInspector.Core
             }));
         }
         #endregion
+
+        private void FileBar_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
         #endregion
 
-        
     }
 }

@@ -103,6 +103,7 @@
     <Compile Include="Pak.Viewer\AmalgamatedPakViewer.Designer.cs">
       <DependentUpon>AmalgamatedPakViewer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Pak.Viewer\AmalgationMode.cs" />
     <Compile Include="Pak.Viewer\PakViewer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -173,6 +174,7 @@
   <ItemGroup>
     <Content Include="favicon.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -43,7 +43,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileHeader.cs" />
-    <Compile Include="PakDataFactory.cs" />
     <Compile Include="PakFile.cs" />
     <Compile Include="PakHeader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

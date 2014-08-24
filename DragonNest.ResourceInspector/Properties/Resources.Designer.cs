@@ -59,5 +59,14 @@ namespace DragonNest.ResourceInspector.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to %AppData%\Dragon Nest Resource Inspector\.
+        /// </summary>
+        internal static string AppData {
+            get {
+                return ResourceManager.GetString("AppData", resourceCulture);
+            }
+        }
     }
 }

@@ -17,24 +17,63 @@ namespace DragonNest.ResourceInspector.Pak.Viewer
 {
     public partial class AmalgamatedPakViewer : DockContent
     {
+        public const double DefaultRelevance = 50D;
+        public const double DefaultLimit = 50D;
+
+        public int Status
+        { 
+            get 
+            { 
+                return status; 
+            } 
+            set 
+            { 
+                if(status == value) 
+                    return; 
+                status = value;
+                if (StatusChangedEvent != null)
+                    StatusChangedEvent(this, EventArgs.Empty); 
+            } 
+        }
+
+
+        public event EventHandler StatusChangedEvent;
         Dictionary<String, FileHeader> files;
+        ListViewColumnSorter lvwColumnSorter;
+        int status;
+
         public AmalgamatedPakViewer()
         {
             InitializeComponent();
+            SearchBox.Width = 500;
+            RelevanceBox.Text = DefaultRelevance.ToString();
+            LimitBox.Text = DefaultLimit.ToString();
+            lvwColumnSorter = new ListViewColumnSorter();
+            this.listView1.ListViewItemSorter = lvwColumnSorter;
         }
 
+        //warning amalgation mode is not used at all
         public AmalgamatedPakViewer LoadPaks(IEnumerable<Stream> streams, AmalgationMode Mode)
         {
-            files = new Dictionary<string, FileHeader>();
-
+            int count = 0;
+            double total = 0;
             var paks = new List<PakFile>();
+            files = new Dictionary<string, FileHeader>();
             Parallel.ForEach(streams, (s) => paks.Add(new PakFile(s)));
+
+            foreach (var v in streams)
+                if (v is FileStream)
+                    toolStripStatusLabel1.Text += ((FileStream)v).Name + ";";
+
+            status = 5;
+            paks.ForEach(p => total += p.Files.Count);
+
             foreach (PakFile p in paks.OrderBy(p => p.Name))
-                foreach(FileHeader f in p.Files)
-                    if(files.ContainsKey(f.Path))
-                        files[f.Path] = f;
+                for (int i = 0; i < p.Files.Count; i++, Status = 5 + Convert.ToInt32(++count/total * 45))
+                    if (files.ContainsKey(p.Files[i].Path))
+                        files[p.Files[i].Path] = p.Files[i];
                     else
-                        files.Add(f.Path, f);
+                        files.Add(p.Files[i].Path, p.Files[i]);
 
             RefreshPakTree();
             return this;
@@ -44,24 +83,24 @@ namespace DragonNest.ResourceInspector.Pak.Viewer
         {
             //To stop graphical inconsistency
             PakTree.SuspendLayout();
-            PakTree.Nodes.Clear();
 
+            int progress = 0;
+            PakTree.Nodes.Clear();
+            double total = files.Count;
             foreach (var file in files.Values)
             {
                 var pathComponents = file.Path.Split(new char[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
                 var Nodes = PakTree.Nodes;
-
-                for (int count = 0; count < pathComponents.Length; count++)
+                Status = 50 + Convert.ToInt32(++ progress/ total * 50);
+                for (int count = 0; count < pathComponents.Length; count++) 
                 {
                     if (!Nodes.ContainsKey(pathComponents[count]))
                     {
-                        TreeNode tn = new TreeNode(pathComponents[count]);
-                        tn.Name = pathComponents[count];
+                        TreeNode tn = new TreeNode(pathComponents[count]) { Name = pathComponents[count] };
                         tn.ImageIndex = tn.SelectedImageIndex = ((count == pathComponents.Length - 1) ? 2 : 0);
                         Nodes.Add(tn);
                     }
-                    var next = Nodes.Find(pathComponents[count], false).First();
-                    Nodes = next.Nodes;
+                    Nodes = Nodes.Find(pathComponents[count], false).First().Nodes;
                 }
             }
             //To update the Graphics
@@ -77,51 +116,31 @@ namespace DragonNest.ResourceInspector.Pak.Viewer
         private void naviBar1_Resize(object sender, EventArgs e)
         {
             var obj = ((NaviBar)sender);
-            if (obj.Collapsed)
-            {
-                splitContainer1.SplitterDistance = obj.Size.Width;
-                splitContainer1.IsSplitterFixed = true;
-            }
-            else
-            {
-                splitContainer1.IsSplitterFixed = false;
-                splitContainer1.SplitterDistance = obj.Size.Width;
-            }
+            splitContainer1.IsSplitterFixed = obj.Collapsed;
+            splitContainer1.SplitterDistance = obj.Size.Width;
         }
 
-        private void PakViewer_Load(object sender, EventArgs e)
-        {
-            toolStripTextBox1.Width = toolStrip1.Size.Width - 4;
-            toolStrip1.SizeChanged += (s, a) => toolStripTextBox1.Width = toolStrip1.Size.Width - 4;
-        }
         private void listView1_DoubleClick(object sender, EventArgs e)
         {
             if (sender == listView1)
+            {
                 if (listView1.SelectedItems.Count == 1)
                 {
                     var Nodes = PakTree.Nodes;
-                    var path = toolStripTextBox1.Text + @"\" + listView1.SelectedItems[0].Text;
+                    var path = String.IsNullOrEmpty(toolStripTextBox1.Text)? String.Empty : toolStripTextBox1.Text + @"\" ;
+                    path += listView1.SelectedItems[0].Text;
                     var pathComponents = path.Split(new char[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
 
                     foreach (var v in pathComponents)
                         Nodes = Nodes.Find(v, false).First().Nodes;
 
-                    
                     if (Nodes.Count == 0)
                         ExternOpen(files.Values.First(p => p.Path == path));
                     else
-                    {
-                        Nodes[0].TreeView.SelectedNode = Nodes[0];
-                        PakTree_AfterSelect(PakTree, new TreeViewEventArgs(Nodes[0].Parent));
-                    }
+                        PakTree_AfterSelect(PakTree, new TreeViewEventArgs((Nodes[0].TreeView.SelectedNode = Nodes[0]).Parent));
                 }
+            }
         }
-
-        private void listView1_MouseClick(object sender, MouseEventArgs e)
-        {
-
-        }
-
 
         private void PakTree_BeforeExpand(object sender, TreeViewCancelEventArgs e)
         {
@@ -141,51 +160,149 @@ namespace DragonNest.ResourceInspector.Pak.Viewer
             }
         }
 
-
         private void PakTree_AfterSelect(object sender, TreeViewEventArgs e)
         {
             if (e.Node.Nodes.Count == 0)
                 return;
 
             listView1.Items.Clear();
-            foreach (TreeNode node in e.Node.Nodes)
-            {
-                ListViewItem item = new ListViewItem(node.Name);
-                listView1.Items.Add(item);
+            foreach (TreeNode node in e.Node.Nodes){
+                var lvi = new ListViewItem(node.Name, node.ImageIndex);
+                if (node.Nodes.Count == 0) { 
+                    lvi.SubItems.Add(files[@"\" + node.FullPath].OriginalSize.ToString());
+                    lvi.SubItems.Add(files[@"\" + node.FullPath].CompressedSize.ToString());
+                }
+                listView1.Items.Add(lvi);
             }
 
-            var path = String.Empty;
             var Node = e.Node;
-            for (int i = 0; i <= e.Node.Level; i++, path = path.Insert(0, @"\"))
-            {
+            var path = String.Empty;
+            for (int i = 0; i <= e.Node.Level; i++, path = path.Insert(0, @"\"), Node = Node.Parent)
                 path = path.Insert(0, Node.Text);
-                Node = Node.Parent;
-            }
+
             toolStripTextBox1.Text = path;
         }
 
         void ExternOpen(FileHeader header)
         {
             var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            var appDataLocation = appData + @"\" + header;
+            Directory.CreateDirectory(appData + @"\Dragon Nest Resource Inspector\");
+            var appDataLocation = appData + @"\Dragon Nest Resource Inspector\" + header;
             using (var fs = new FileStream(appDataLocation, FileMode.Create, FileAccess.Write, FileShare.ReadWrite | FileShare.Delete))
             using (var hs = header.GetStream())
             {
                 hs.CopyTo(fs);
                 Process.Start(appDataLocation);                
-                //warning : will throw exception if app specified to open time cnanot be found or no app is specified.
+            }
+        }
+        private void ExportButton_Click(object sender, EventArgs e)
+        {
+            if (PakTree.SelectedNode == null)
+                return;
+
+            using (var fbd = new FolderBrowserDialog())
+                if (fbd.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
+                    Export(PakTree.SelectedNode, fbd.SelectedPath);
+
+        }
+
+        private void Export(TreeNode node, String Location)
+        {
+            if (node.GetNodeCount(false) == 0)
+                using (var fs = new FileStream(Location, FileMode.CreateNew))
+                using (var stream = files[@"\" + node.FullPath].GetStream())
+                {
+                    stream.CopyTo(fs);
+                    stream.Close();
+                    stream.Dispose();
+                    fs.Close();
+                    fs.Dispose();
+                }
+            else
+                Directory.CreateDirectory(Location += @"\" + node.Name);
+
+            foreach (TreeNode n in node.Nodes)
+                Export(n, Location + @"\" + n.Name);
+        }
+
+        private void ExportAllButton_Click(object sender, EventArgs e)
+        {
+            using (var fbd = new FolderBrowserDialog())
+                if (fbd.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
+                    Parallel.ForEach(PakTree.Nodes.Cast<TreeNode>(), p => Export(p, fbd.SelectedPath));
+        }
+
+        private void SearchButton_Click(object sender, EventArgs e)
+        {
+            SuspendLayout();
+            listView1.Items.Clear();
+            toolStripTextBox1.Clear();
+            double relevance = Double.Parse(RelevanceBox.Text) / 100;
+            int limit  = Int32.Parse(LimitBox.Text);
+            var results = files.Select(p => new
+            {
+                Value = p,
+                Revelance = Math.Max(Levenshtein.Percentage(p.Key, SearchBox.Text),
+                    Levenshtein.Percentage(p.Value.Name, SearchBox.Text))
+            }).OrderByDescending(p => p.Revelance).Where(p => p.Revelance > relevance).Select(p => p.Value.Value);
+
+
+            foreach (var result in results.Where((p, i) => i < limit))
+            {
+                var lvi = new ListViewItem(result.Path, 2);
+                lvi.SubItems.Add(result.OriginalSize.ToString());
+                lvi.SubItems.Add(result.CompressedSize.ToString());
+                listView1.Items.Add(lvi);
+            }
+
+            ResumeLayout();
+        }
+
+        private void listView1_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            // Determine if clicked column is already the column that is being sorted.
+            if (e.Column == lvwColumnSorter.SortColumn)
+            {
+                // Reverse the current sort direction for this column.
+                if (lvwColumnSorter.Order == SortOrder.Ascending)
+                {
+                    lvwColumnSorter.Order = SortOrder.Descending;
+                }
+                else
+                {
+                    lvwColumnSorter.Order = SortOrder.Ascending;
+                }
+            }
+            else
+            {
+                // Set the column number that is to be sorted; default to ascending.
+                lvwColumnSorter.SortColumn = e.Column;
+                lvwColumnSorter.Order = SortOrder.Ascending;
+            }
+
+            // Perform the sort with these new sort options.
+            this.listView1.Sort();
+        }
+
+        private void toolStripTextBox3_Validating(object sender, CancelEventArgs e)
+        {
+            Double d = new double();
+            if (!Double.TryParse(RelevanceBox.Text, out d) || d > 100 || d < 0)
+            {
+                MessageBox.Show("Relevance must be a valid number bettwen 0 and 100");
+                RelevanceBox.Text = DefaultRelevance.ToString();
             }
         }
 
-        private void toolStripButton1_Click(object sender, EventArgs e)
+        private void toolStripTextBox2_Validating(object sender, CancelEventArgs e)
         {
-            using(var fbd = new FolderBrowserDialog())
+            int i = new int();
+            if (!Int32.TryParse(LimitBox.Text, out i) || i < 0)
             {
-                if(fbd.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
-                {
-                    MessageBox.Show(fbd.SelectedPath);
-                }
+                MessageBox.Show("Limit must be a valid Integer greater than 0");           
+                LimitBox.Text = DefaultLimit.ToString();
             }
         }
+
     }
 }

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("DragonNest.ResourceInspector.Pak.Study")]
+[assembly: AssemblyTitle("DragonNest.ResourceInspector.Testing")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DragonNest.ResourceInspector.Pak.Study")]
+[assembly: AssemblyProduct("DragonNest.ResourceInspector.Testing")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("54fb2051-754f-44ee-8850-01a5f90cb241")]
+[assembly: Guid("ff36771a-ef9d-4b70-99ab-ab3bc9335b59")]
 
 // Version information for an assembly consists of the following four values:
 //

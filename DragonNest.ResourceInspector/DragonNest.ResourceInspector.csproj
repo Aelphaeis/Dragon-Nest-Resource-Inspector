@@ -97,6 +97,7 @@
     <Compile Include="Core\Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
+    <Compile Include="Levenshtein.cs" />
     <Compile Include="Pak.Viewer\AmalgamatedPakViewer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -104,12 +105,7 @@
       <DependentUpon>AmalgamatedPakViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="Pak.Viewer\AmalgationMode.cs" />
-    <Compile Include="Pak.Viewer\PakViewer.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Pak.Viewer\PakViewer.Designer.cs">
-      <DependentUpon>PakViewer.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Pak.Viewer\ListViewColumnSorter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -127,9 +123,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Pak.Viewer\AmalgamatedPakViewer.resx">
       <DependentUpon>AmalgamatedPakViewer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Pak.Viewer\PakViewer.resx">
-      <DependentUpon>PakViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -46,17 +46,19 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.MainMenuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dragonNestTableFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pakFileToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showLinqToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearTempFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.dockPanel1 = new WeifenLuo.WinFormsUI.Docking.DockPanel();
             this.FileBar = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.dragonNestTableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pakFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.singleFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.amalgamationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainMenuStrip.SuspendLayout();
             this.FileBar.SuspendLayout();
             this.SuspendLayout();
@@ -75,10 +77,32 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
+            // 
+            // newToolStripMenuItem
+            // 
+            this.newToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.dragonNestTableFileToolStripMenuItem,
+            this.pakFileToolStripMenuItem1});
+            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.newToolStripMenuItem.Text = "New";
+            // 
+            // dragonNestTableFileToolStripMenuItem
+            // 
+            this.dragonNestTableFileToolStripMenuItem.Name = "dragonNestTableFileToolStripMenuItem";
+            this.dragonNestTableFileToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.dragonNestTableFileToolStripMenuItem.Text = "Dragon Nest Table File";
+            // 
+            // pakFileToolStripMenuItem1
+            // 
+            this.pakFileToolStripMenuItem1.Name = "pakFileToolStripMenuItem1";
+            this.pakFileToolStripMenuItem1.Size = new System.Drawing.Size(193, 22);
+            this.pakFileToolStripMenuItem1.Text = "Package File";
             // 
             // exitToolStripMenuItem
             // 
@@ -89,7 +113,8 @@
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.showLinqToolStripMenuItem});
+            this.showLinqToolStripMenuItem,
+            this.clearTempFilesToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.optionsToolStripMenuItem.Text = "Options";
@@ -97,9 +122,16 @@
             // showLinqToolStripMenuItem
             // 
             this.showLinqToolStripMenuItem.Name = "showLinqToolStripMenuItem";
-            this.showLinqToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.showLinqToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.showLinqToolStripMenuItem.Text = "Show Linq";
             this.showLinqToolStripMenuItem.Click += new System.EventHandler(this.showLinqToolStripMenuItem_Click);
+            // 
+            // clearTempFilesToolStripMenuItem
+            // 
+            this.clearTempFilesToolStripMenuItem.Name = "clearTempFilesToolStripMenuItem";
+            this.clearTempFilesToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.clearTempFilesToolStripMenuItem.Text = "Clear Temp Files";
+            this.clearTempFilesToolStripMenuItem.Click += new System.EventHandler(this.clearTempFilesToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
@@ -174,7 +206,6 @@
             this.FileBar.Size = new System.Drawing.Size(1030, 25);
             this.FileBar.TabIndex = 7;
             this.FileBar.Text = "toolStrip1";
-            this.FileBar.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.FileBar_ItemClicked);
             // 
             // toolStripButton1
             // 
@@ -186,7 +217,7 @@
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(29, 22);
-            this.toolStripButton1.Text = "toolStripButton1";
+            this.toolStripButton1.Text = "New";
             // 
             // dragonNestTableToolStripMenuItem
             // 
@@ -196,24 +227,9 @@
             // 
             // pakFileToolStripMenuItem
             // 
-            this.pakFileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.singleFileToolStripMenuItem,
-            this.amalgamationToolStripMenuItem});
             this.pakFileToolStripMenuItem.Name = "pakFileToolStripMenuItem";
             this.pakFileToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
-            this.pakFileToolStripMenuItem.Text = "Pak";
-            // 
-            // singleFileToolStripMenuItem
-            // 
-            this.singleFileToolStripMenuItem.Name = "singleFileToolStripMenuItem";
-            this.singleFileToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
-            this.singleFileToolStripMenuItem.Text = "Single File";
-            // 
-            // amalgamationToolStripMenuItem
-            // 
-            this.amalgamationToolStripMenuItem.Name = "amalgamationToolStripMenuItem";
-            this.amalgamationToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
-            this.amalgamationToolStripMenuItem.Text = "Amalgamation";
+            this.pakFileToolStripMenuItem.Text = "Package File";
             // 
             // Main
             // 
@@ -227,7 +243,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.Name = "Main";
-            this.Text = "Dragon Nest NA DNT Viewer";
+            this.Text = "Dragon Nest Resource Inspector";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
             this.MainMenuStrip.ResumeLayout(false);
@@ -252,7 +268,9 @@
         private System.Windows.Forms.ToolStripDropDownButton toolStripButton1;
         private System.Windows.Forms.ToolStripMenuItem dragonNestTableToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pakFileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem singleFileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem amalgamationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clearTempFilesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem dragonNestTableFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pakFileToolStripMenuItem1;
     }
 }

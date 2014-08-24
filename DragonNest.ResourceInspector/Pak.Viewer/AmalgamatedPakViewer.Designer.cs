@@ -35,17 +35,16 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.naviBar1 = new Guifreaks.NavigationBar.NaviBar(this.components);
             this.naviBand1 = new Guifreaks.NavigationBar.NaviBand(this.components);
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.PakTree = new System.Windows.Forms.TreeView();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.listView1 = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.PakTree = new System.Windows.Forms.TreeView();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -121,20 +120,30 @@
             this.naviBand1.TabIndex = 3;
             this.naviBand1.Text = "Pak Explorer";
             // 
-            // statusStrip1
+            // PakTree
             // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 458);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(828, 22);
-            this.statusStrip1.TabIndex = 6;
-            this.statusStrip1.Text = "statusStrip1";
+            this.PakTree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PakTree.ImageIndex = 0;
+            this.PakTree.ImageList = this.imageList1;
+            this.PakTree.Location = new System.Drawing.Point(0, 0);
+            this.PakTree.Name = "PakTree";
+            this.PakTree.SelectedImageIndex = 0;
+            this.PakTree.ShowLines = false;
+            this.PakTree.ShowPlusMinus = false;
+            this.PakTree.ShowRootLines = false;
+            this.PakTree.Size = new System.Drawing.Size(161, 413);
+            this.PakTree.TabIndex = 1;
+            this.PakTree.BeforeCollapse += new System.Windows.Forms.TreeViewCancelEventHandler(this.PakTree_BeforeCollapse);
+            this.PakTree.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.PakTree_BeforeExpand);
+            this.PakTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.PakTree_AfterSelect);
             // 
-            // toolStripStatusLabel1
+            // imageList1
             // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "Icontexto-Elite-Folders-Close-Folder.ico");
+            this.imageList1.Images.SetKeyName(1, "Icontexto-Elite-Folders-Open-Folder.ico");
+            this.imageList1.Images.SetKeyName(2, "defult-text.ico");
             // 
             // listView1
             // 
@@ -168,36 +177,25 @@
             this.columnHeader3.Text = "Compressed Size";
             this.columnHeader3.Width = 121;
             // 
-            // PakTree
+            // statusStrip1
             // 
-            this.PakTree.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PakTree.ImageIndex = 0;
-            this.PakTree.ImageList = this.imageList1;
-            this.PakTree.Location = new System.Drawing.Point(0, 0);
-            this.PakTree.Name = "PakTree";
-            this.PakTree.SelectedImageIndex = 0;
-            this.PakTree.ShowLines = false;
-            this.PakTree.ShowPlusMinus = false;
-            this.PakTree.ShowRootLines = false;
-            this.PakTree.Size = new System.Drawing.Size(161, 413);
-            this.PakTree.TabIndex = 1;
-            this.PakTree.BeforeCollapse += new System.Windows.Forms.TreeViewCancelEventHandler(this.PakTree_BeforeCollapse);
-            this.PakTree.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.PakTree_BeforeExpand);
-            this.PakTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.PakTree_AfterSelect);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 458);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(828, 22);
+            this.statusStrip1.TabIndex = 6;
+            this.statusStrip1.Text = "statusStrip1";
             // 
-            // imageList1
+            // toolStripStatusLabel1
             // 
-            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "Icontexto-Elite-Folders-Close-Folder.ico");
-            this.imageList1.Images.SetKeyName(1, "Icontexto-Elite-Folders-Open-Folder.ico");
-            this.imageList1.Images.SetKeyName(2, "defult-text.ico");
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
             // 
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButton1,
-            this.toolStripButton2,
             this.toolStripTextBox1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
@@ -213,15 +211,7 @@
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
             this.toolStripButton1.Text = "Extract Selected";
-            // 
-            // toolStripButton2
-            // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton2.Text = "Amalgamate";
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // toolStripTextBox1
             // 
@@ -277,7 +267,6 @@
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox1;
     }
 }

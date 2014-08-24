@@ -163,6 +163,7 @@ namespace DragonNest.ResourceInspector.Pak.Viewer
             }
             toolStripTextBox1.Text = path;
         }
+
         void ExternOpen(FileHeader header)
         {
             var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
@@ -171,7 +172,19 @@ namespace DragonNest.ResourceInspector.Pak.Viewer
             using (var hs = header.GetStream())
             {
                 hs.CopyTo(fs);
-                Process.Start(appDataLocation);
+                Process.Start(appDataLocation);                
+                //warning : will throw exception if app specified to open time cnanot be found or no app is specified.
+            }
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            using(var fbd = new FolderBrowserDialog())
+            {
+                if(fbd.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
+                {
+                    MessageBox.Show(fbd.SelectedPath);
+                }
             }
         }
     }

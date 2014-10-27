@@ -160,27 +160,61 @@ namespace DragonNest.ResourceInspector.Pak.Viewer
             }
         }
 
+        List<BackgroundWorker> pakTreeWorkers = new List<BackgroundWorker>();
         private void PakTree_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            //if nothing is selected then no contents to show.
             if (e.Node.Nodes.Count == 0)
                 return;
 
-            listView1.Items.Clear();
-            foreach (TreeNode node in e.Node.Nodes){
-                var lvi = new ListViewItem(node.Name, node.ImageIndex);
-                if (node.Nodes.Count == 0) { 
-                    lvi.SubItems.Add(files[@"\" + node.FullPath].OriginalSize.ToString());
-                    lvi.SubItems.Add(files[@"\" + node.FullPath].CompressedSize.ToString());
-                }
-                listView1.Items.Add(lvi);
-            }
-
+            //put the path of the new node in the text box
             var Node = e.Node;
             var path = String.Empty;
             for (int i = 0; i <= e.Node.Level; i++, path = path.Insert(0, @"\"), Node = Node.Parent)
                 path = path.Insert(0, Node.Text);
 
+            //If they are selected the same folder no need to reload and 
+            //if you did you'd have problems with getting duplicates of files
+            if(String.Equals(path, toolStripTextBox1.Text))
+                return;
+
+            //no need to continue loading if someone changed folder.
+            pakTreeWorkers.ForEach(p => p.CancelAsync());
+            pakTreeWorkers.Clear();
+
+            //set the new path
             toolStripTextBox1.Text = path;
+   
+            //anything currently being shown is now out of sync with what is selected
+            listView1.Items.Clear();
+
+            //go through what is in the tree add children nodes to list view 
+            foreach (TreeNode node in e.Node.Nodes){
+
+                BackgroundWorker backgroundWorker = new BackgroundWorker();
+                backgroundWorker.WorkerSupportsCancellation = true;
+
+                //keep track of background workers 
+                pakTreeWorkers.Add(backgroundWorker);
+
+                backgroundWorker.DoWork += (s, args) =>
+                    {
+                        var lvi = new ListViewItem(node.Name, node.ImageIndex);
+                        //if the node is not a folder then it is a file
+                        if (node.Nodes.Count == 0)
+                        {
+                            //get and display the original size and compressed size of file
+                            lvi.SubItems.Add(files[@"\" + node.FullPath].OriginalSize.ToString());
+                            lvi.SubItems.Add(files[@"\" + node.FullPath].CompressedSize.ToString());
+                        }
+                        
+                        // so if someone changes the folder then you're not screwed.
+                        if (String.Equals(path, toolStripTextBox1.Text))
+                            listView1.Invoke(new MethodInvoker(() => listView1.Items.Add(lvi)));
+                    };
+
+                backgroundWorker.RunWorkerAsync();
+            }
         }
 
         void ExternOpen(FileHeader header)

@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonNest.ResourceInspecto
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonNest.ResourceInspector.Testing", "DragonNest.ResourceInspector.Testing\DragonNest.ResourceInspector.Testing.csproj", "{99A22C4C-82F7-49AF-AAB4-EAB9823C4F45}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonNest.ResourceInspector.External", "DragonNest.ResourceInspector.External\DragonNest.ResourceInspector.External.csproj", "{660B6542-5EFC-47DB-88A6-775F91E05CC2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{99A22C4C-82F7-49AF-AAB4-EAB9823C4F45}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99A22C4C-82F7-49AF-AAB4-EAB9823C4F45}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99A22C4C-82F7-49AF-AAB4-EAB9823C4F45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{660B6542-5EFC-47DB-88A6-775F91E05CC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{660B6542-5EFC-47DB-88A6-775F91E05CC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{660B6542-5EFC-47DB-88A6-775F91E05CC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{660B6542-5EFC-47DB-88A6-775F91E05CC2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -58,7 +58,7 @@ namespace DragonNest.ResourceInspector.Pak.Viewer
             int count = 0;
             double total = 0;
             var paks = new List<PakFile>();
-            files = new Dictionary<string, FileHeader>();
+            files = new Dictionary<String, FileHeader>();
             Parallel.ForEach(streams, (s) => paks.Add(new PakFile(s)));
 
             foreach (var v in streams)
@@ -68,8 +68,11 @@ namespace DragonNest.ResourceInspector.Pak.Viewer
             status = 5;
             paks.ForEach(p => total += p.Files.Count);
 
+            //order pak files and iterate through them
             foreach (PakFile p in paks.OrderBy(p => p.Name))
+                //Iterate through paks, update status
                 for (int i = 0; i < p.Files.Count; i++, Status = 5 + Convert.ToInt32(++count/total * 45))
+                    // 
                     if (files.ContainsKey(p.Files[i].Path))
                         files[p.Files[i].Path] = p.Files[i];
                     else

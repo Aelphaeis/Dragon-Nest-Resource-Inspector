@@ -7,68 +7,65 @@ using System.IO;
 
 namespace DragonNest.ResourceInspector.Pak
 {
-    public class PakFile
+    public class PakFile : FolderHeader
     {
-        public String Path { get; set; }
-        public String Name { get; set; }
-        public PakHeader Header { get; set; }
-        public IList<FileHeader> Files { get; set; }
+        public const string Identifier = "EyedentityGames Packing File 0.1";
 
-        Dictionary<String,IHeader> files { get; set; }
+        public Int32 TableOffset { get; set; }
 
-        public PakFile()
+        //IList<FileHeader> Files { get; set; }
+
+        public Dictionary<String,IHeader> files { get; set; }
+
+        public PakFile() : base()
         {
-            Header = new PakHeader();
-            Files = new List<FileHeader>();
-            files = new Dictionary<String, IHeader>();
         }
 
-        public PakFile(Stream stream)
-            : this()
-        {
-            //If we can't seek, we can't parse the stream
-            if (!stream.CanSeek)
-                throw new Exception("Unable to Seek through Stream");
-            //We don't own the stream, so leave open is set to true
-            using (var reader = new BinaryReader(stream, Encoding.Default, true))
-            {
-                //If we don't have the signature then that means we are dealing with an unknown file type
-                if (PakHeader.Identifier != Encoding.ASCII.GetString(reader.ReadBytes(0x20)))
-                    throw new Exception("Invalid File Format");
+        //public PakFile(Stream stream)
+        //    : this()
+        //{
+        //    //If we can't seek, we can't parse the stream
+        //    if (!stream.CanSeek)
+        //        throw new Exception("Unable to Seek through Stream");
+        //    //We don't own the stream, so leave open is set to true
+        //    using (var reader = new BinaryReader(stream, Encoding.Default, true))
+        //    {
+        //        //If we don't have the signature then that means we are dealing with an unknown file type
+        //        if (PakHeader.Identifier != Encoding.ASCII.GetString(reader.ReadBytes(0x20)))
+        //            throw new Exception("Invalid File Format");
 
-                if (stream is FileStream)
-                {
-                    Path = ((FileStream)stream).Name;
-                    Name = Path.Split(new string[] { @"\" }, StringSplitOptions.RemoveEmptyEntries).Last();
-                }
+        //        if (stream is FileStream)
+        //        {
+        //            Path = ((FileStream)stream).Name;
+        //            Name = Path.Split(new string[] { @"\" }, StringSplitOptions.RemoveEmptyEntries).Last();
+        //        }
 
+        //        //This is where the FileCount and File Offset are stored.
+        //        stream.Position = 0x104L;
+        //        Header.FileCount = reader.ReadUInt32();
+        //        Header.TableOffset = reader.ReadUInt32();
 
+        //        //We'll begin reading our file headers at the first offset Position
+        //        stream.Position = Header.TableOffset;
 
-                //This is where the FileCount and File Offset are stored.
-                stream.Position = 0x104L;
-                Header.FileCount = reader.ReadUInt32();
-                Header.TableOffset = reader.ReadUInt32();
-
-                //We'll begin reading our file headers at the first offset Position
-                stream.Position = Header.TableOffset;
-
-                // file = ne
+        //        // file = ne
 
 
-                for (int i = 0; i < Header.FileCount; i++)
-                {
-                    var header = FileHeader.FromBinaryReader(reader);
-                    header.file = this;
-                    Files.Add(header);
-                }
-            }
-        }
+        //        for (int i = 0; i < Header.FileCount; i++)
+        //        {
+        //            var header = FileHeader.FromBinaryReader(reader);
+        //            header.file = this;
+        //            Files.Add(header);
+        //        }
+        //    }
+        //}
 
-        public void LoadPak(Stream stream) 
+        public PakFile LoadPak(Stream stream) 
         {
             //check if we can parse the stream, break if we can't
             if (!stream.CanSeek)
                 throw new Exception("Unable to Seek through Stream");
+
             //create reader from stream
             using(var reader = new BinaryReader(stream, Encoding.Default, true))
             {
@@ -78,35 +75,55 @@ namespace DragonNest.ResourceInspector.Pak
 
                 //Read filecount and Table offset
                 stream.Position = 0x104L;
-                Header.FileCount = reader.ReadUInt32();
-                Header.TableOffset = reader.ReadUInt32();
+                FileCount = Convert.ToInt32(reader.ReadUInt32());
+                TableOffset = Convert.ToInt32(reader.ReadUInt32());
 
                 //set read location for file header
-                stream.Position = Header.TableOffset;
+                stream.Position = TableOffset;
                 //Read our files.
-                for(int i = 0; i < Header.FileCount; i++)
+                for(int i = 0; i < FileCount; i++)
                 {
                     var fileInfo = FileHeader.FromBinaryReader(reader);
                     fileInfo.file = this;
 
+                    //Get the folder path + file name
                     var headerPath = fileInfo.Path.Split(new string[] { @"\" }, StringSplitOptions.RemoveEmptyEntries);
-                    var tempPath = String.Empty;
+
+                    var folderPath = String.Empty;
                     var folderIndex = files;
 
+                    //Transverse folders to get to folder which is suppose to hold file.
                     for(int c = 0, limit = headerPath.Length - 1; c < limit; c++)
                     {
-                        if (!folderIndex.ContainsKey(headerPath[c]))
-                            folderIndex.Add(headerPath[c], new FolderHeader() { Name = headerPath[c]});
+                        //Construct Folder Path For Each Folder.
+                        folderPath += headerPath[c] + @"\";
+
+                        //Create folder if it doesn't exisit
+                        if (!folderIndex.ContainsKey(headerPath[c])) 
+                            folderIndex.Add(headerPath[c], new FolderHeader() { Name = headerPath[c], Path = folderPath});
+
+                        //Set current folder to the next folder in the path.
                         folderIndex = (folderIndex[headerPath[c]] as FolderHeader).Files;
                     }
 
-                    //This shows that there are duplicates;
+                    //This line proves that there are duplicates with the same pak file (Remove if statement)
                     if (!folderIndex.ContainsKey(fileInfo.Name))
                         folderIndex.Add(fileInfo.Name, fileInfo);
                     else
                         folderIndex[fileInfo.Name] = fileInfo;
                 }
             }
+            return this;
         }
+
+        public static Dictionary<String, IHeader> Merge(IEnumerable<PakFile> files)
+        {
+            var result = new Dictionary<String, IHeader>();
+            FolderHeader folderIndex;
+
+            return result;
+        }
+
+
     }
 }

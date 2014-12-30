@@ -8,8 +8,18 @@ namespace DragonNest.ResourceInspector.Pak
 {
     public class FolderHeader : IHeader
     {
-        public Int32 FileCount { get; set; }
+        public Int32 FileCount { get; private set; }
         public String Name { get; set; }
-        
+        public String Path { get; set; }
+
+        public Dictionary<String, IHeader> Files { get; set; }
+
+        public FolderHeader()
+        {
+            Files = new Dictionary<string, IHeader>();
+        }
+
+
+      
     }
 }

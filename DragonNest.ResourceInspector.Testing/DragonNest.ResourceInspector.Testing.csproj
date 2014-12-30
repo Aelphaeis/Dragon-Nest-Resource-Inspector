@@ -52,8 +52,13 @@
   <ItemGroup>
     <Compile Include="Levenshtein.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PakFileTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DragonNest.ResourceInspector.Pak\DragonNest.ResourceInspector.Pak.csproj">
+      <Project>{5b884ae2-931c-4e35-86b7-3ceaf63b1d78}</Project>
+      <Name>DragonNest.ResourceInspector.Pak</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DragonNest.ResourceInspector\DragonNest.ResourceInspector.csproj">
       <Project>{62daedf3-d285-43df-9785-063c12cd59fd}</Project>
       <Name>DragonNest.ResourceInspector</Name>

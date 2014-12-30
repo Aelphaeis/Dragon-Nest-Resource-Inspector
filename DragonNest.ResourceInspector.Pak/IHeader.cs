@@ -8,7 +8,7 @@ namespace DragonNest.ResourceInspector.Pak
 {
     public interface IHeader
     {
-        String Path { get; set; }
-        String Name { get; set; }
+        String Path { get; }
+        String Name { get; }
     }
 }

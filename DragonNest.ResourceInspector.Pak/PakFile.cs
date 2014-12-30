@@ -15,7 +15,7 @@ namespace DragonNest.ResourceInspector.Pak
 
         //IList<FileHeader> Files { get; set; }
 
-        public Dictionary<String,IHeader> files { get; set; }
+        //public Dictionary<String,IHeader> Files { get; set; }
 
         public PakFile() : base()
         {
@@ -90,7 +90,7 @@ namespace DragonNest.ResourceInspector.Pak
                     var headerPath = fileInfo.Path.Split(new string[] { @"\" }, StringSplitOptions.RemoveEmptyEntries);
 
                     var folderPath = String.Empty;
-                    var folderIndex = files;
+                    var folderIndex = Files;
 
                     //Transverse folders to get to folder which is suppose to hold file.
                     for(int c = 0, limit = headerPath.Length - 1; c < limit; c++)
@@ -119,11 +119,26 @@ namespace DragonNest.ResourceInspector.Pak
         public static Dictionary<String, IHeader> Merge(IEnumerable<PakFile> files)
         {
             var result = new Dictionary<String, IHeader>();
-            FolderHeader folderIndex;
+            var folderIndex = result;
 
+            foreach(var pak in files.OrderBy(p => p.Name))
+            {
+                foreach(IHeader header in GetDeepFileList(pak.Files, true))
+                {
+                    folderIndex = result;
+                    var headerPath = header.Path.Split(new string[] { @"\" }, StringSplitOptions.RemoveEmptyEntries);
+                    for(int c = 0, limit = headerPath.Length - 1; c < limit; c++)
+                    {
+                        if (!folderIndex.ContainsKey(headerPath[c]))
+                            folderIndex.Add(headerPath[c], new FolderHeader() { Name = headerPath[c], Path = header.Path });
+                        folderIndex = (folderIndex[headerPath[c]] as FolderHeader).Files;
+                    }
+
+                    if (!folderIndex.ContainsKey(header.Name))
+                        folderIndex.Add(header.Name, header);
+                }
+            }
             return result;
         }
-
-
     }
 }

@@ -18,5 +18,21 @@ namespace DragonNest.ResourceInspector.Pak
         {
             Files = new Dictionary<string, IHeader>();
         }
+
+        public static IEnumerable<IHeader> GetDeepFileList(Dictionary<String, IHeader> root, Boolean IncludeFolders = true)
+        {
+            foreach (var file in root.Values)
+            {
+                if(file is FolderHeader)
+                {
+                    if (IncludeFolders)
+                        yield return file;
+                    foreach (var child in GetDeepFileList((file as FolderHeader).Files, IncludeFolders))
+                        yield return child;
+                }
+                else
+                    yield return file;
+            }
+        }
     }
 }

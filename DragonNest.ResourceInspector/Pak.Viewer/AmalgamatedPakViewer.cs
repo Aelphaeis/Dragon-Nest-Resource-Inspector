@@ -59,24 +59,24 @@ namespace DragonNest.ResourceInspector.Pak.Viewer
             double total = 0;
             var paks = new List<PakFile>();
             files = new Dictionary<String, FileHeader>();
-            Parallel.ForEach(streams, (s) => paks.Add(new PakFile(s)));
+            //Parallel.ForEach(streams, (s) => paks.Add(new PakFile(s)));
 
-            foreach (var v in streams)
-                if (v is FileStream)
-                    toolStripStatusLabel1.Text += ((FileStream)v).Name + ";";
+            //foreach (var v in streams)
+            //    if (v is FileStream)
+            //        toolStripStatusLabel1.Text += ((FileStream)v).Name + ";";
 
-            status = 5;
-            paks.ForEach(p => total += p.Files.Count);
+            //status = 5;
+            //paks.ForEach(p => total += p.Files.Count);
 
-            //order pak files and iterate through them
-            foreach (PakFile p in paks.OrderBy(p => p.Name))
-                //Iterate through paks, update status
-                for (int i = 0; i < p.Files.Count; i++, Status = 5 + Convert.ToInt32(++count/total * 45))
-                    // 
-                    if (files.ContainsKey(p.Files[i].Path))
-                        files[p.Files[i].Path] = p.Files[i];
-                    else
-                        files.Add(p.Files[i].Path, p.Files[i]);
+            ////order pak files and iterate through them
+            //foreach (PakFile p in paks.OrderBy(p => p.Name))
+            //    //Iterate through paks, update status
+            //    for (int i = 0; i < p.Files.Count; i++, Status = 5 + Convert.ToInt32(++count/total * 45))
+            //        // 
+            //        if (files.ContainsKey(p.Files[i].Path))
+            //            files[p.Files[i].Path] = p.Files[i];
+            //        else
+            //            files.Add(p.Files[i].Path, p.Files[i]);
 
             RefreshPakTree();
             return this;

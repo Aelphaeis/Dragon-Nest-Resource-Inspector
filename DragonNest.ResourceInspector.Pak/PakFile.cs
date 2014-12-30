@@ -26,7 +26,7 @@ namespace DragonNest.ResourceInspector.Pak
             if (!stream.CanSeek)
                 throw new Exception("Unable to Seek through Stream");
             //We don't own the stream, so leave open is set to true
-            using(var reader = new BinaryReader(stream,Encoding.Default, true))
+            using(var reader = new BinaryReader(stream, Encoding.Default, true))
             {
                 //If we don't have the signature then that means we are dealing with an unknown file type
                 if (PakHeader.Identifier != Encoding.ASCII.GetString(reader.ReadBytes(0x20)))

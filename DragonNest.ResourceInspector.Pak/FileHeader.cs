@@ -17,7 +17,7 @@ namespace DragonNest.ResourceInspector.Pak
     //    uint Unknown        <format=hex>;
     //    uint Null[10];
     //};
-    public struct FileHeader
+    public struct FileHeader : IHeader
     {
         public static FileHeader FromBinaryReader(BinaryReader reader)
         {

@@ -12,8 +12,6 @@ namespace DragonNest.ResourceInspector.Pak
         {
             var headerPath = Path.Split(new string[] { @"\" }, StringSplitOptions.RemoveEmptyEntries);
             Dictionary<String, IHeader> index = Tree;
-            IHeader header;
-
             for (int i = 0, limit = headerPath.Length -1; i < limit; i++)
                 index = (index[headerPath[i]] as FolderHeader).Files;
 

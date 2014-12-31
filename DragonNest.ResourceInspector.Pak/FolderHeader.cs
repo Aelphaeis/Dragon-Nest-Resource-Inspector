@@ -8,9 +8,30 @@ namespace DragonNest.ResourceInspector.Pak
 {
     public class FolderHeader : IHeader
     {
+        public static IHeader Find(Dictionary<String, IHeader> Tree, String Path)
+        {
+            var headerPath = Path.Split(new string[] { @"\" }, StringSplitOptions.RemoveEmptyEntries);
+            Dictionary<String, IHeader> index = Tree;
+            IHeader header;
+
+            for (int i = 0, limit = headerPath.Length -1; i < limit; i++)
+                index = (index[headerPath[i]] as FolderHeader).Files;
+
+            return index[headerPath[headerPath.Length - 1]];
+        }
+
+        public virtual FolderHeader Parent { get; set; }
         public virtual Int32 FileCount { get; set; }
         public virtual String Name { get; set; }
         public virtual String Path { get; set; }
+
+        public virtual IHeader this[String Path]
+        {
+            get
+            {
+                return Find(Files, Path);
+            }
+        }
 
         public virtual Dictionary<String, IHeader> Files { get; set; }
 

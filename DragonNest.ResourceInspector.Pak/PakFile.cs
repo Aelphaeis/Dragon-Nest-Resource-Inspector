@@ -13,52 +13,9 @@ namespace DragonNest.ResourceInspector.Pak
 
         public Int32 TableOffset { get; set; }
 
-        //IList<FileHeader> Files { get; set; }
-
-        //public Dictionary<String,IHeader> Files { get; set; }
-
         public PakFile() : base()
         {
         }
-
-        //public PakFile(Stream stream)
-        //    : this()
-        //{
-        //    //If we can't seek, we can't parse the stream
-        //    if (!stream.CanSeek)
-        //        throw new Exception("Unable to Seek through Stream");
-        //    //We don't own the stream, so leave open is set to true
-        //    using (var reader = new BinaryReader(stream, Encoding.Default, true))
-        //    {
-        //        //If we don't have the signature then that means we are dealing with an unknown file type
-        //        if (PakHeader.Identifier != Encoding.ASCII.GetString(reader.ReadBytes(0x20)))
-        //            throw new Exception("Invalid File Format");
-
-        //        if (stream is FileStream)
-        //        {
-        //            Path = ((FileStream)stream).Name;
-        //            Name = Path.Split(new string[] { @"\" }, StringSplitOptions.RemoveEmptyEntries).Last();
-        //        }
-
-        //        //This is where the FileCount and File Offset are stored.
-        //        stream.Position = 0x104L;
-        //        Header.FileCount = reader.ReadUInt32();
-        //        Header.TableOffset = reader.ReadUInt32();
-
-        //        //We'll begin reading our file headers at the first offset Position
-        //        stream.Position = Header.TableOffset;
-
-        //        // file = ne
-
-
-        //        for (int i = 0; i < Header.FileCount; i++)
-        //        {
-        //            var header = FileHeader.FromBinaryReader(reader);
-        //            header.file = this;
-        //            Files.Add(header);
-        //        }
-        //    }
-        //}
 
         public PakFile LoadPak(Stream stream) 
         {
@@ -72,6 +29,12 @@ namespace DragonNest.ResourceInspector.Pak
                 //check if format is correct
                 if (PakHeader.Identifier != Encoding.ASCII.GetString(reader.ReadBytes(0x20)))
                     throw new Exception("Invalid File Format");
+
+                if (stream is FileStream)
+                {
+                    Path = ((FileStream)stream).Name;
+                    Name = Path.Split(new string[] { @"\" }, StringSplitOptions.RemoveEmptyEntries).Last();
+                }
 
                 //Read filecount and Table offset
                 stream.Position = 0x104L;

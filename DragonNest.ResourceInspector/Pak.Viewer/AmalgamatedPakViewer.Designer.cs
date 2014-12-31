@@ -33,14 +33,6 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.openInInspectorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.SearchButton = new System.Windows.Forms.ToolStripButton();
-            this.SearchBox = new System.Windows.Forms.ToolStripTextBox();
-            this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.LimitBox = new System.Windows.Forms.ToolStripTextBox();
-            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
-            this.RelevanceBox = new System.Windows.Forms.ToolStripTextBox();
-            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.naviBar1 = new Guifreaks.NavigationBar.NaviBar(this.components);
             this.naviBand1 = new Guifreaks.NavigationBar.NaviBand(this.components);
@@ -54,8 +46,11 @@
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.SearchBox = new System.Windows.Forms.ToolStripTextBox();
+            this.SearchButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.contextMenuStrip1.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -66,6 +61,7 @@
             this.naviBand1.SuspendLayout();
             this.toolStrip2.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // contextMenuStrip1
@@ -88,73 +84,6 @@
             this.imageList1.Images.SetKeyName(0, "Icontexto-Elite-Folders-Close-Folder.ico");
             this.imageList1.Images.SetKeyName(1, "Icontexto-Elite-Folders-Open-Folder.ico");
             this.imageList1.Images.SetKeyName(2, "defult-text.ico");
-            // 
-            // SearchButton
-            // 
-            this.SearchButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.SearchButton.Image = ((System.Drawing.Image)(resources.GetObject("SearchButton.Image")));
-            this.SearchButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.SearchButton.Name = "SearchButton";
-            this.SearchButton.Size = new System.Drawing.Size(23, 22);
-            this.SearchButton.Text = "Search";
-            this.SearchButton.Click += new System.EventHandler(this.SearchButton_Click);
-            // 
-            // SearchBox
-            // 
-            this.SearchBox.Name = "SearchBox";
-            this.SearchBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.SearchBox.Size = new System.Drawing.Size(250, 25);
-            // 
-            // toolStripTextBox1
-            // 
-            this.toolStripTextBox1.Name = "toolStripTextBox1";
-            this.toolStripTextBox1.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
-            this.toolStripTextBox1.Size = new System.Drawing.Size(100, 25);
-            this.toolStripTextBox1.Visible = false;
-            // 
-            // toolStrip1
-            // 
-            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.LimitBox,
-            this.toolStripLabel2,
-            this.RelevanceBox,
-            this.toolStripLabel1,
-            this.SearchBox,
-            this.SearchButton,
-            this.toolStripTextBox1});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.toolStrip1.Size = new System.Drawing.Size(995, 25);
-            this.toolStrip1.TabIndex = 8;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
-            // LimitBox
-            // 
-            this.LimitBox.Name = "LimitBox";
-            this.LimitBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.LimitBox.Size = new System.Drawing.Size(45, 25);
-            this.LimitBox.Validating += new System.ComponentModel.CancelEventHandler(this.toolStripTextBox2_Validating);
-            // 
-            // toolStripLabel2
-            // 
-            this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(34, 22);
-            this.toolStripLabel2.Text = "Limit";
-            // 
-            // RelevanceBox
-            // 
-            this.RelevanceBox.Name = "RelevanceBox";
-            this.RelevanceBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.RelevanceBox.Size = new System.Drawing.Size(45, 25);
-            this.RelevanceBox.Validating += new System.ComponentModel.CancelEventHandler(this.toolStripTextBox3_Validating);
-            // 
-            // toolStripLabel1
-            // 
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(60, 22);
-            this.toolStripLabel1.Text = "Relevance";
             // 
             // splitContainer1
             // 
@@ -221,6 +150,7 @@
             this.PakTree.BeforeCollapse += new System.Windows.Forms.TreeViewCancelEventHandler(this.PakTree_BeforeCollapse);
             this.PakTree.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.PakTree_BeforeExpand);
             this.PakTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.PakTree_AfterSelect);
+            this.PakTree.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.PakTree_NodeMouseDoubleClick);
             // 
             // toolStrip2
             // 
@@ -303,6 +233,42 @@
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
             // 
+            // SearchBox
+            // 
+            this.SearchBox.Name = "SearchBox";
+            this.SearchBox.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.SearchBox.Size = new System.Drawing.Size(250, 25);
+            // 
+            // SearchButton
+            // 
+            this.SearchButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.SearchButton.Image = ((System.Drawing.Image)(resources.GetObject("SearchButton.Image")));
+            this.SearchButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.SearchButton.Name = "SearchButton";
+            this.SearchButton.Size = new System.Drawing.Size(23, 22);
+            this.SearchButton.Text = "Search";
+            // 
+            // toolStripTextBox1
+            // 
+            this.toolStripTextBox1.Name = "toolStripTextBox1";
+            this.toolStripTextBox1.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+            this.toolStripTextBox1.Size = new System.Drawing.Size(100, 25);
+            this.toolStripTextBox1.Visible = false;
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.SearchBox,
+            this.SearchButton,
+            this.toolStripTextBox1});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.toolStrip1.Size = new System.Drawing.Size(995, 25);
+            this.toolStrip1.TabIndex = 8;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
             // AmalgamatedPakViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -314,8 +280,6 @@
             this.Name = "AmalgamatedPakViewer";
             this.Text = "PakViewer";
             this.contextMenuStrip1.ResumeLayout(false);
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.Panel2.PerformLayout();
@@ -330,6 +294,8 @@
             this.toolStrip2.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -340,14 +306,6 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem openInInspectorToolStripMenuItem;
         private System.Windows.Forms.ImageList imageList1;
-        private System.Windows.Forms.ToolStripButton SearchButton;
-        private System.Windows.Forms.ToolStripTextBox SearchBox;
-        private System.Windows.Forms.ToolStripTextBox toolStripTextBox1;
-        private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripTextBox LimitBox;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel2;
-        private System.Windows.Forms.ToolStripTextBox RelevanceBox;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private Guifreaks.NavigationBar.NaviBar naviBar1;
         private Guifreaks.NavigationBar.NaviBand naviBand1;
@@ -361,5 +319,9 @@
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripTextBox SearchBox;
+        private System.Windows.Forms.ToolStripButton SearchButton;
+        private System.Windows.Forms.ToolStripTextBox toolStripTextBox1;
+        private System.Windows.Forms.ToolStrip toolStrip1;
     }
 }

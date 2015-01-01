@@ -69,6 +69,19 @@ namespace DragonNest.ResourceInspector.Pak
             }
         }
 
+        public virtual void CopyToFileSystem(String Location)
+        {
+            using (var fs = new FileStream(Location + @"\" + this.Name, FileMode.Create))
+            using (var stream = GetStream())
+            {
+                stream.CopyTo(fs);
+                stream.Close();
+                stream.Dispose();
+                fs.Close();
+                fs.Dispose();
+            }
+        }
+
         public override string ToString()
         {
             return Name;

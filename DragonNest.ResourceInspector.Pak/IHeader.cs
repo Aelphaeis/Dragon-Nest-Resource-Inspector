@@ -10,5 +10,7 @@ namespace DragonNest.ResourceInspector.Pak
     {
         String Path { get; }
         String Name { get; }
+
+        void CopyToFileSystem(String Location);
     }
 }

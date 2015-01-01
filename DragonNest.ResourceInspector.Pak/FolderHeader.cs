@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.IO;
 namespace DragonNest.ResourceInspector.Pak
 {
     public class FolderHeader : IHeader
@@ -36,6 +36,13 @@ namespace DragonNest.ResourceInspector.Pak
         public FolderHeader()
         {
             Files = new Dictionary<string, IHeader>();
+        }
+
+        public void CopyToFileSystem(String Location)
+        {
+            var directory = Directory.CreateDirectory(Location + @"\" + this.Name);
+            foreach (var v in this.Files.Values)
+                v.CopyToFileSystem(Location + @"\" + this.Name);
         }
 
         public static IEnumerable<IHeader> GetDeepFileList(Dictionary<String, IHeader> root, Boolean IncludeFolders = true)

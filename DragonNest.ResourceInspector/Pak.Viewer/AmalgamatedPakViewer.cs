@@ -223,8 +223,12 @@ namespace DragonNest.ResourceInspector.Pak.Viewer
         private void Export(TreeNode node, String Location)
         {
             if (node.GetNodeCount(false) == 0)
-                using (var fs = new FileStream(Location, FileMode.CreateNew))
-                using (var stream = (files[@"\" + node.FullPath] as FileHeader).GetStream())
+            {
+
+                var header = FolderHeader.Find(files, node.FullPath);
+                header = header;
+                using (var fs = new FileStream(Location, FileMode.Create))
+                using (var stream = (files[@"\" + node.Name] as FileHeader).GetStream())
                 {
                     stream.CopyTo(fs);
                     stream.Close();
@@ -232,18 +236,49 @@ namespace DragonNest.ResourceInspector.Pak.Viewer
                     fs.Close();
                     fs.Dispose();
                 }
+            }
             else
-                Directory.CreateDirectory(Location += @"\" + node.Name);
+                
 
             foreach (TreeNode n in node.Nodes)
-                Export(n, Location + @"\" + n.Name);
+                Export(n, Location + @"\" + n.Text);
+        }
+
+        private void Export(IHeader header, String Location)
+        {
+            if (header is FolderHeader)
+            {
+                var folder = header as FolderHeader;
+                var directory = Directory.CreateDirectory(Location + @"\" + header.Name);
+
+                foreach (var v in folder.Files.Values)
+                    Export(v, Location + @"\"+ header.Name);
+            }
+            else
+            {
+                var file = header as FileHeader;
+                using (var fs = new FileStream(Location + file.Name, FileMode.Create))
+                using (var stream = file.GetStream())
+                {
+                    stream.CopyTo(fs);
+                    stream.Close();
+                    stream.Dispose();
+                    fs.Close();
+                    fs.Dispose();
+                }
+            }
         }
 
         private void ExportAllButton_Click(object sender, EventArgs e)
         {
             using (var fbd = new FolderBrowserDialog())
                 if (fbd.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
-                    Parallel.ForEach(PakTree.Nodes.Cast<TreeNode>(), p => Export(p, fbd.SelectedPath));
+                {
+                    FolderHeader header = new FolderHeader(){Name = @"\", Files = files};
+                    Export(header, fbd.SelectedPath);
+                   // Parallel.ForEach(PakTree.Nodes.Cast<TreeNode>(), p => Export(p, fbd.SelectedPath));
+                }
+
         }
 
         private void listView1_ColumnClick(object sender, ColumnClickEventArgs e)

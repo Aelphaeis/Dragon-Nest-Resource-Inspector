@@ -53,5 +53,6 @@ namespace DragonNest.ResourceInspector.Pak
                     yield return file;
             }
         }
+
     }
 }

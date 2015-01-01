@@ -71,6 +71,8 @@ namespace DragonNest.ResourceInspector.Pak
 
         public virtual void CopyToFileSystem(String Location)
         {
+            //todo ideally there should be a better way for handling cases where you're overwritting already
+            //existing files.
             using (var fs = new FileStream(Location + @"\" + this.Name, FileMode.Create))
             using (var stream = GetStream())
             {
